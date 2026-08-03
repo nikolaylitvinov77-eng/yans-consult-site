@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="font-family:'IBM Plex Sans',sans-serif;color:#17352C">
+  <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#FFFFFF;border-left:3px solid #B0913F;padding:32px 34px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:26px;line-height:1.25;margin-bottom:12px">Обращение отправлено</div>
+      <div style="font-size:15px;line-height:1.65;color:#4F544E;margin-bottom:20px">Ответим в течение рабочего дня на указанный контакт. Если вопрос срочный — {{ phone }}.</div>
+      <div onClick="{{ reset }}" style="display:inline-block;border:1px solid #DCD9CE;padding:11px 22px;font-size:14px;font-weight:500;cursor:pointer" style-hover="border-color:#B0913F">Отправить ещё одно</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ open }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85897F;margin-bottom:7px">Имя</div>
+        <input value="{{ name }}" onInput="{{ onName }}" placeholder="Как к вам обращаться" style="width:100%;padding:13px 15px;border:1px solid {{ nameBorder }};background:#FFFFFF;font-size:15px;outline:none">
+        <sc-if value="{{ errName }}"><div style="font-size:12.5px;color:#A34032;margin-top:6px">{{ errName }}</div></sc-if>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85897F;margin-bottom:7px">Компания</div>
+        <input value="{{ company }}" onInput="{{ onCompany }}" placeholder="Необязательно" style="width:100%;padding:13px 15px;border:1px solid #DCD9CE;background:#FFFFFF;font-size:15px;outline:none">
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85897F;margin-bottom:7px">Телефон или почта</div>
+      <input value="{{ contact }}" onInput="{{ onContact }}" placeholder="+7 900 000-00-00 или name@company.ru" style="width:100%;padding:13px 15px;border:1px solid {{ contactBorder }};background:#FFFFFF;font-size:15px;outline:none">
+      <sc-if value="{{ errContact }}"><div style="font-size:12.5px;color:#A34032;margin-top:6px">{{ errContact }}</div></sc-if>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85897F;margin-bottom:7px">Вопрос</div>
+      <textarea value="{{ question }}" onInput="{{ onQuestion }}" rows="4" placeholder="Опишите ситуацию: что произошло, какие документы есть, какой срок" style="width:100%;padding:13px 15px;border:1px solid {{ questionBorder }};background:#FFFFFF;font-size:15px;outline:none;resize:vertical;font-family:'IBM Plex Sans',sans-serif"></textarea>
+      <sc-if value="{{ errQuestion }}"><div style="font-size:12.5px;color:#A34032;margin-top:6px">{{ errQuestion }}</div></sc-if>
+    </div>
+    <div onClick="{{ attach }}" style="border:1px dashed #A3A79C;padding:14px 16px;font-size:13.5px;color:#4F544E;cursor:pointer;display:flex;justify-content:space-between;gap:16px" style-hover="border-color:#B0913F">
+      <div>{{ fileLabel }}</div><div style="color:#85897F">до 20 МБ</div>
+    </div>
+    <div onClick="{{ toggleConsent }}" style="display:flex;gap:12px;align-items:flex-start;cursor:pointer">
+      <div style="width:18px;height:18px;flex:none;border:1px solid {{ consentBorder }};background:{{ consentBg }};margin-top:2px"></div>
+      <div style="font-size:13px;line-height:1.55;color:#4F544E">Согласен на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></div>
+    </div>
+    <sc-if value="{{ errConsent }}"><div style="font-size:12.5px;color:#A34032;margin-top:-6px">{{ errConsent }}</div></sc-if>
+    <div onClick="{{ submit }}" style="background:#17352C;color:#F3F1EA;font-size:15px;font-weight:600;padding:16px 30px;cursor:pointer;text-align:center" style-hover="background:#0F241E">Отправить обращение</div>
+    <div style="font-size:12px;line-height:1.55;color:#85897F">Обращение не является налоговой консультацией и не создаёт обязательств сторон. Первичная оценка вопроса — без оплаты.</div>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:620},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+7 495 103-10-51&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { name: '', company: '', contact: '', question: '', consent: false, file: '', errors: {}, sent: false };
+
+  validate() {
+    const s = this.state, e = {};
+    if (!s.name.trim()) e.name = 'Укажите, как к вам обращаться';
+    if (!s.contact.trim()) e.contact = 'Нужен телефон или адрес почты для ответа';
+    else if (!/@/.test(s.contact) && s.contact.replace(/\D/g, '').length < 10) e.contact = 'Проверьте формат: телефон или адрес почты';
+    if (s.question.trim().length < 15) e.question = 'Опишите ситуацию хотя бы в двух предложениях — так ответ будет по существу';
+    if (!s.consent) e.consent = 'Без согласия на обработку данных мы не можем принять обращение';
+    return e;
+  }
+
+  renderVals() {
+    const s = this.state, err = s.errors;
+    const bd = k => err[k] ? '#A34032' : '#DCD9CE';
+    return {
+      sent: s.sent,
+      open: !s.sent,
+      phone: this.props.phone ?? '+7 495 103-10-51',
+      name: s.name, company: s.company, contact: s.contact, question: s.question,
+      onName: e => this.setState({ name: e.target.value }),
+      onCompany: e => this.setState({ company: e.target.value }),
+      onContact: e => this.setState({ contact: e.target.value }),
+      onQuestion: e => this.setState({ question: e.target.value }),
+      errName: err.name, errContact: err.contact, errQuestion: err.question, errConsent: err.consent,
+      nameBorder: bd('name'), contactBorder: bd('contact'), questionBorder: bd('question'),
+      consentBg: s.consent ? '#17352C' : '#FFFFFF',
+      consentBorder: err.consent ? '#A34032' : (s.consent ? '#17352C' : '#A3A79C'),
+      toggleConsent: () => this.setState({ consent: !s.consent }),
+      fileLabel: s.file || 'Приложить документы — требование, договор, акт',
+      attach: () => this.setState({ file: s.file ? '' : 'Требование № 12-45 от 27.07.2026.pdf · 1,4 МБ' }),
+      submit: () => {
+        const e = this.validate();
+        if (Object.keys(e).length) this.setState({ errors: e });
+        else this.setState({ errors: {}, sent: true });
+      },
+      reset: () => this.setState({ name: '', company: '', contact: '', question: '', consent: false, file: '', errors: {}, sent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

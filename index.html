@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap&subset=cyrillic,latin" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E4E2D8; -webkit-font-smoothing: antialiased; }
+  a { color: #17352C; text-decoration: none; border-bottom: 1px solid #B0913F; }
+  a:hover { color: #0F241E; border-bottom-color: #17352C; }
+  * { text-wrap: pretty; box-sizing: border-box; }
+  input, textarea, button, select { font: inherit; color: inherit; }
+</style>
+</helmet>
+
+<div style="font-family:'IBM Plex Sans',sans-serif;color:#17352C;background:#F3F1EA;min-height:100vh">
+
+<header style="background:#FFFFFF;border-bottom:1px solid #DCD9CE;position:sticky;top:0;z-index:20">
+  <div style="max-width:1240px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;min-height:88px;gap:32px;flex-wrap:wrap">
+    <div onClick="{{ goHome }}" onMouseEnter="{{ replayMark }}" style="display:flex;align-items:flex-start;gap:16px;cursor:pointer">
+      <div style="display:grid;grid-template-columns:repeat(3,13px);grid-template-rows:repeat(3,13px);gap:3px;margin-top:2px;perspective:220px">
+        <sc-for list="{{ markCells }}" as="sq" hint-placeholder-count="9">
+          <div style="width:13px;height:13px;background:{{ sq.bg }};transform:{{ sq.tr }};transition:{{ sq.tn }};backface-visibility:visible"></div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-size:20px;line-height:1;letter-spacing:-0.01em"><span style="font-weight:700">ЯНС</span> <span style="font-weight:300;letter-spacing:0.08em">КОНСАЛТ</span></div>
+        <div style="height:2px;background:#B0913F;margin:7px 0 5px;width:168px"></div>
+        <div style="font-size:8.5px;letter-spacing:0.13em;text-transform:uppercase;color:#6C7570">юридические и финансовые консультации</div>
+      </div>
+    </div>
+    <nav style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:flex-end">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+        <div onClick="{{ item.go }}" style="font-size:14px;font-weight:500;cursor:pointer;padding:6px 0;border-bottom:2px solid transparent" style-hover="border-bottom-color:#B0913F">{{ item.label }}</div>
+      </sc-for>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;border-left:1px solid #DCD9CE;padding-left:22px;flex:none">
+        <div style="font-size:15px;font-weight:600;letter-spacing:0.01em">{{ phone }}</div>
+        <div style="font-size:11.5px;color:#85897F">Москва, БЦ «ТРИО»</div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="background:#17352C;color:#F3F1EA">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 300px;min-height:520px">
+      <div style="padding:88px 60px 72px 0;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#B0913F;margin-bottom:28px">Налоговый и юридический консалтинг · с 2001 года</div>
+          <h1 style="font-family:'IBM Plex Serif',serif;font-size:62px;line-height:1.05;font-weight:400;letter-spacing:-0.015em;margin:0;max-width:16em">Отвечаем за решение,<br>а не за совет</h1>
+          <div style="width:64px;height:4px;background:#B0913F;margin:32px 0 24px"></div>
+          <p style="font-size:17px;line-height:1.65;max-width:34em;color:#C9CCC4;margin:0">Письменная позиция с расчётом, нормой и практикой — документ, который можно предъявить инспекции, банку, покупателю бизнеса или суду. 704 письменные работы по 39 темам за 25 лет.</p>
+        </div>
+        <div style="display:flex;gap:14px;margin-top:44px">
+          <div onClick="{{ goContacts }}" style="background:#B0913F;color:#17352C;font-size:15px;font-weight:600;padding:16px 30px;cursor:pointer">Задать вопрос</div>
+          <div onClick="{{ goKb }}" style="border:1px solid #4F6B62;color:#F3F1EA;font-size:15px;font-weight:500;padding:16px 30px;cursor:pointer" style-hover="border-color:#B0913F">База знаний</div>
+        </div>
+      </div>
+      <div style="background:#0F241E;position:relative">
+        <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,1fr)">
+          <div></div><div style="background:#B0913F"></div>
+          <div style="background:#17352C"></div><div></div>
+          <div></div><div></div>
+          <div></div><div></div>
+          <div></div><div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#FFFFFF;border-bottom:1px solid #DCD9CE">
+    <div style="max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(5,1fr)">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
+        <div style="padding:36px 24px 34px 0;border-right:1px solid #DCD9CE">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:40px;line-height:1">{{ f.n }}</div>
+          <div style="font-size:13px;line-height:1.5;color:#85897F;margin-top:8px">{{ f.t }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:72px 40px 8px">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:32px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:34px;letter-spacing:-0.01em">С чем к нам приходят</div>
+      <div style="flex:1;height:1px;background:#DCD9CE"></div>
+      <div style="font-size:13px;color:#85897F">Выберите ситуацию — покажем, как мы её ведём</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <sc-for list="{{ entries }}" as="e" hint-placeholder-count="6">
+        <div onClick="{{ e.open }}" style="background:#FFFFFF;padding:28px 30px 26px;cursor:pointer;border-top:3px solid #DCD9CE;display:flex;flex-direction:column;gap:12px;min-height:172px" style-hover="border-top-color:#B0913F">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:21px;line-height:1.3">{{ e.q }}</div>
+          <div style="font-size:14px;line-height:1.6;color:#4F544E;flex:1">{{ e.a }}</div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ e.dirTitle }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:64px 40px 8px">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:32px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:34px;letter-spacing:-0.01em">Направления</div>
+      <div style="flex:1;height:1px;background:#DCD9CE"></div>
+      <div onClick="{{ goServices }}" style="font-size:13.5px;font-weight:600;color:#8E7328;cursor:pointer">Все 12 направлений и 67 услуг →</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:36px">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+        <div>
+          <div style="display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:start;margin-bottom:18px">
+            <div>
+              <div style="font-family:'IBM Plex Serif',serif;font-size:24px;line-height:1.2">{{ g.title }}</div>
+              <div style="width:40px;height:3px;background:#B0913F;margin-top:10px"></div>
+            </div>
+            <div style="font-size:14px;line-height:1.6;color:#85897F;max-width:52em">{{ g.note }}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+            <sc-for list="{{ g.dirs }}" as="d" hint-placeholder-count="4">
+              <div onClick="{{ d.open }}" style="background:#FFFFFF;padding:26px 28px;cursor:pointer;display:flex;flex-direction:column;gap:10px;min-height:160px" style-hover="background:#F3F1EA">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+                  <div style="font-size:12px;font-weight:600;letter-spacing:0.16em;color:#8E7328">{{ d.roman }}</div>
+                  <dc-import name="Пиктограмма направления" roman="{{ d.roman }}" hint-size="40px,40px" style="width:40px;height:40px;flex:none"></dc-import>
+                </div>
+                <div style="font-size:12px;color:#A3A79C">{{ d.count }} услуг</div>
+                <div style="font-family:'IBM Plex Serif',serif;font-size:20px;line-height:1.25">{{ d.title }}</div>
+                <div style="font-size:13.5px;line-height:1.55;color:#85897F">{{ d.short }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:64px 40px 8px">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:32px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:34px;letter-spacing:-0.01em">База знаний</div>
+      <div style="flex:1;height:1px;background:#DCD9CE"></div>
+      <div onClick="{{ goKb }}" style="font-size:13.5px;font-weight:600;color:#8E7328;cursor:pointer">Все материалы →</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <sc-for list="{{ latest }}" as="a" hint-placeholder-count="3">
+        <div onClick="{{ a.open }}" style="background:#FFFFFF;padding:26px 28px 24px;cursor:pointer;display:flex;flex-direction:column;gap:12px;min-height:210px" style-hover="background:#EFEDE4">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ a.type }}</div>
+          <div style="font-family:'IBM Plex Serif',serif;font-size:19px;line-height:1.3;flex:1">{{ a.title }}</div>
+          <div style="font-size:13px;color:#85897F">{{ a.dateLabel }} · проверено {{ a.checkedLabel }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:64px 40px 88px">
+    <div style="background:#FFFFFF;display:grid;grid-template-columns:1fr 1fr">
+      <div style="padding:52px 48px">
+        <div style="font-family:'IBM Plex Serif',serif;font-size:32px;line-height:1.2;margin-bottom:16px">Опишите ситуацию</div>
+        <div style="width:56px;height:4px;background:#B0913F;margin-bottom:20px"></div>
+        <p style="font-size:15px;line-height:1.65;color:#4F544E;margin:0 0 26px">Ответим, какой формат работы подходит под задачу и сколько это займёт. Первичная оценка вопроса — без оплаты.</p>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:14px;line-height:1.5;color:#4F544E">
+          <div style="color:#85897F">Телефон</div><div>{{ phone }}</div>
+          <div style="color:#85897F">Почта</div><div>{{ email }}</div>
+          <div style="color:#85897F">Адрес</div><div>{{ address }}</div>
+        </div>
+      </div>
+      <div style="background:#F3F1EA;padding:52px 48px">
+        <dc-import name="Форма обращения ЯНС" hint-size="100%,420px"></dc-import>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isServices }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — Услуги</div>
+  <div style="padding:34px 0 44px;border-bottom:1px solid #DCD9CE;margin-bottom:44px">
+    <h1 style="font-family:'IBM Plex Serif',serif;font-size:52px;line-height:1.08;font-weight:400;margin:0 0 20px;max-width:16em">Двенадцать направлений, шестьдесят семь работ</h1>
+    <div style="width:64px;height:4px;background:#B0913F;margin-bottom:22px"></div>
+    <p style="font-size:16px;line-height:1.65;color:#4F544E;max-width:44em;margin:0">Аудит, обзорная проверка, МСФО и финансовый due diligence оказываются аудиторской компанией группы. ЯНС Консалт ведёт налоговую, юридическую и оценочную часть работы — от диагностики риска до кассационной инстанции.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:44px">
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:14px">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:30px;line-height:1.2">{{ g.title }}</div>
+          <div style="flex:1;height:1px;background:#DCD9CE"></div>
+        </div>
+        <div style="font-size:14.5px;line-height:1.6;color:#85897F;max-width:56em;margin-bottom:22px">{{ g.note }}</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+          <sc-for list="{{ g.dirs }}" as="d" hint-placeholder-count="4">
+            <div onClick="{{ d.open }}" style="background:#FFFFFF;padding:30px 34px;cursor:pointer;display:grid;grid-template-columns:56px 1fr 320px 40px;gap:28px;align-items:start" style-hover="background:#F3F1EA">
+              <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding-top:4px">
+                <div style="font-size:13px;font-weight:600;letter-spacing:0.16em;color:#8E7328">{{ d.roman }}</div>
+                <dc-import name="Пиктограмма направления" roman="{{ d.roman }}" hint-size="44px,44px" style="width:44px;height:44px"></dc-import>
+              </div>
+              <div>
+                <div style="font-family:'IBM Plex Serif',serif;font-size:24px;line-height:1.25;margin-bottom:8px">{{ d.title }}</div>
+                <div style="font-size:14px;line-height:1.6;color:#85897F">{{ d.short }}</div>
+              </div>
+              <div style="font-size:13.5px;line-height:1.6;color:#4F544E">{{ d.servicesLine }}</div>
+              <div style="font-size:12px;color:#A3A79C;text-align:right;padding-top:6px">{{ d.count }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isDirection }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="background:#17352C;color:#F3F1EA">
+    <div style="max-width:1240px;margin:0 auto;padding:26px 40px 64px">
+      <div style="font-size:12.5px;color:#9DA29A;margin-bottom:44px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — <span onClick="{{ goServices }}" style="cursor:pointer">Услуги</span> — {{ dir.title }}</div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#B0913F;margin-bottom:20px">{{ groupOf }} · направление {{ dir.roman }} · {{ dir.count }} услуг</div>
+      <div style="display:grid;grid-template-columns:1fr 120px;gap:48px;align-items:start">
+        <div>
+          <h1 style="font-family:'IBM Plex Serif',serif;font-size:54px;line-height:1.06;font-weight:400;margin:0;max-width:15em">{{ dir.title }}</h1>
+          <div style="width:64px;height:4px;background:#B0913F;margin:28px 0 22px"></div>
+          <p style="font-size:17px;line-height:1.65;color:#C9CCC4;max-width:40em;margin:0">{{ dir.lead }}</p>
+        </div>
+        <dc-import name="Пиктограмма направления" roman="{{ dir.roman }}" inverse="{{ true }}" hint-size="120px,120px" style="width:120px;height:120px"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:64px 40px 0">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:20px">Когда это нужно</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ dir.when }}" as="w" hint-placeholder-count="4">
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:3px;height:22px;background:#B0913F;flex:none;margin-top:3px"></div><div style="font-size:16px;line-height:1.55">{{ w }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:20px">Что входит в работу</div>
+        <div style="background:#FFFFFF;padding:28px 30px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ dir.included }}" as="i" hint-placeholder-count="5">
+            <div style="font-size:14.5px;line-height:1.6;color:#4F544E;border-bottom:1px solid #EFEDE4;padding-bottom:12px">{{ i }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:20px">Как проходит работа</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+      <sc-for list="{{ stages }}" as="s" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;padding:22px 20px 24px;display:flex;flex-direction:column;gap:8px;min-height:150px">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:26px;color:#B0913F;line-height:1">{{ s.n }}</div>
+          <div style="font-size:14px;font-weight:600;line-height:1.35">{{ s.t }}</div>
+          <div style="font-size:12.5px;line-height:1.5;color:#85897F">{{ s.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="background:#FFFFFF;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-left:3px solid #B0913F">
+      <div style="padding:30px 34px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Результат</div>
+        <div style="font-size:15px;line-height:1.6;color:#4F544E">{{ dir.result }}</div>
+      </div>
+      <div style="padding:30px 34px;border-left:1px solid #EFEDE4">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Срок</div>
+        <div style="font-size:15px;line-height:1.6;color:#4F544E">{{ dir.term }}</div>
+      </div>
+      <div style="padding:30px 34px;border-left:1px solid #EFEDE4">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Разграничение с аудитом</div>
+        <div style="font-size:15px;line-height:1.6;color:#4F544E">{{ dir.border }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:30px">Услуги направления</div>
+      <div style="flex:1;height:1px;background:#DCD9CE"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+      <sc-for list="{{ dir.services }}" as="s" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;padding:28px 30px;display:flex;flex-direction:column;gap:12px">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:19px;line-height:1.3">{{ s.t }}</div>
+          <div style="display:grid;grid-template-columns:96px 1fr;gap:8px 16px;font-size:13.5px;line-height:1.55">
+            <div style="color:#85897F">С чем приходят</div><div style="color:#4F544E">{{ s.q }}</div>
+            <div style="color:#85897F">Результат</div><div style="color:#4F544E">{{ s.r }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:18px">Связанные кейсы</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ dirCases }}" as="c" hint-placeholder-count="2">
+            <div onClick="{{ c.open }}" style="background:#FFFFFF;padding:24px 26px;cursor:pointer;display:flex;flex-direction:column;gap:8px" style-hover="background:#EFEDE4">
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ c.industry }}</div>
+              <div style="font-family:'IBM Plex Serif',serif;font-size:19px;line-height:1.3">{{ c.title }}</div>
+              <div style="font-size:13.5px;line-height:1.55;color:#85897F">{{ c.outcome }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:18px">Связанные материалы</div>
+        <div style="background:#FFFFFF">
+          <sc-for list="{{ dirArticles }}" as="a" hint-placeholder-count="4">
+            <div onClick="{{ a.open }}" style="padding:20px 26px;cursor:pointer;border-bottom:1px solid #EFEDE4;display:flex;flex-direction:column;gap:6px" style-hover="background:#F3F1EA">
+              <div style="font-size:15.5px;line-height:1.4;font-weight:500">{{ a.title }}</div>
+              <div style="font-size:12.5px;color:#85897F">{{ a.type }} · {{ a.dateLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 88px">
+    <div style="background:#FFFFFF;display:grid;grid-template-columns:1fr 1fr">
+      <div style="padding:48px">
+        <div style="font-family:'IBM Plex Serif',serif;font-size:30px;line-height:1.2;margin-bottom:14px">Вопрос по направлению</div>
+        <div style="width:56px;height:4px;background:#B0913F;margin-bottom:18px"></div>
+        <p style="font-size:15px;line-height:1.65;color:#4F544E;margin:0">Опишите ситуацию в свободной форме и приложите документы, если они есть. Ответим о применимом формате работы и сроке.</p>
+      </div>
+      <div style="background:#F3F1EA;padding:48px">
+        <dc-import name="Форма обращения ЯНС" hint-size="100%,420px"></dc-import>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isIndustries }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — Отрасли</div>
+  <div style="padding:34px 0 40px;border-bottom:1px solid #DCD9CE;margin-bottom:40px">
+    <h1 style="font-family:'IBM Plex Serif',serif;font-size:52px;line-height:1.08;font-weight:400;margin:0 0 20px">Одиннадцать отраслей</h1>
+    <div style="width:64px;height:4px;background:#B0913F;margin-bottom:22px"></div>
+    <p style="font-size:16px;line-height:1.65;color:#4F544E;max-width:44em;margin:0">Количество работ — по внутренней библиотеке консультаций: 704 письменные работы за 25 лет практики.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+    <sc-for list="{{ industries }}" as="i" hint-placeholder-count="11">
+      <div onClick="{{ i.open }}" style="background:#FFFFFF;padding:28px 30px;cursor:pointer;display:grid;grid-template-columns:1fr 72px;gap:20px;align-items:start" style-hover="background:#F3F1EA">
+        <div>
+          <div style="font-family:'IBM Plex Serif',serif;font-size:21px;line-height:1.25;margin-bottom:10px">{{ i.title }}</div>
+          <div style="font-size:13.5px;line-height:1.6;color:#85897F">{{ i.spec }}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:32px;line-height:1;color:#B0913F">{{ i.count }}</div>
+          <div style="font-size:11px;color:#A3A79C;margin-top:4px">работ</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isIndustry }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="background:#17352C;color:#F3F1EA">
+    <div style="max-width:1240px;margin:0 auto;padding:26px 40px 60px">
+      <div style="font-size:12.5px;color:#9DA29A;margin-bottom:40px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — <span onClick="{{ goIndustries }}" style="cursor:pointer">Отрасли</span> — {{ ind.title }}</div>
+      <h1 style="font-family:'IBM Plex Serif',serif;font-size:50px;line-height:1.08;font-weight:400;margin:0;max-width:16em">{{ ind.title }}</h1>
+      <div style="width:64px;height:4px;background:#B0913F;margin:26px 0 22px"></div>
+      <p style="font-size:17px;line-height:1.65;color:#C9CCC4;max-width:40em;margin:0">{{ ind.spec }}</p>
+      <div style="display:flex;gap:56px;margin-top:36px">
+        <div><div style="font-family:'IBM Plex Serif',serif;font-size:38px;line-height:1">{{ ind.count }}</div><div style="font-size:12.5px;color:#9DA29A;margin-top:6px">письменных работ по отрасли</div></div>
+        <div><div style="font-family:'IBM Plex Serif',serif;font-size:38px;line-height:1">{{ ind.years }}</div><div style="font-size:12.5px;color:#9DA29A;margin-top:6px">лет практики в отрасли</div></div>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:60px 40px 0">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:20px">Типовые вопросы отрасли</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ ind.questions }}" as="q" hint-placeholder-count="4">
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:3px;height:22px;background:#B0913F;flex:none;margin-top:3px"></div><div style="font-size:16px;line-height:1.55">{{ q }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:20px">Направления, которые закрывают эти вопросы</div>
+        <div style="background:#FFFFFF">
+          <sc-for list="{{ ind.dirs }}" as="d" hint-placeholder-count="3">
+            <div onClick="{{ d.open }}" style="padding:20px 26px;cursor:pointer;border-bottom:1px solid #EFEDE4;display:flex;justify-content:space-between;gap:16px;align-items:center" style-hover="background:#F3F1EA">
+              <div style="font-size:15.5px;font-weight:500">{{ d.title }}</div>
+              <div style="font-size:12px;color:#A3A79C">{{ d.roman }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 88px">
+    <div style="background:#FFFFFF;display:grid;grid-template-columns:1fr 1fr">
+      <div style="padding:48px">
+        <div style="font-family:'IBM Plex Serif',serif;font-size:30px;line-height:1.2;margin-bottom:14px">Вопрос по отрасли</div>
+        <div style="width:56px;height:4px;background:#B0913F;margin-bottom:18px"></div>
+        <p style="font-size:15px;line-height:1.65;color:#4F544E;margin:0">Опишите операцию — ответим, что в ней спорно и как это подтверждается документально.</p>
+      </div>
+      <div style="background:#F3F1EA;padding:48px">
+        <dc-import name="Форма обращения ЯНС" hint-size="100%,420px"></dc-import>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isKb }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — База знаний</div>
+  <div style="padding:34px 0 36px">
+    <h1 style="font-family:'IBM Plex Serif',serif;font-size:52px;line-height:1.08;font-weight:400;margin:0 0 20px">База знаний</h1>
+    <div style="width:64px;height:4px;background:#B0913F;margin-bottom:22px"></div>
+    <p style="font-size:16px;line-height:1.65;color:#4F544E;max-width:44em;margin:0">Разъяснения, обзоры изменений, аналитика и короткие ответы. Каждый материал несёт дату публикации и дату последней проверки актуальности.</p>
+  </div>
+
+  <div style="background:#FFFFFF;padding:26px 30px;display:flex;flex-direction:column;gap:20px;margin-bottom:28px">
+    <div style="display:flex;gap:14px;align-items:center">
+      <input value="{{ kbQuery }}" onInput="{{ onQuery }}" placeholder="Поиск по материалам: «ставка НДС 0 %», «прибыль КИК»" style="flex:1;padding:14px 16px;border:1px solid #DCD9CE;background:#F3F1EA;font-size:15px;outline:none">
+      <div style="font-size:12.5px;color:#85897F;max-width:19em;line-height:1.45">Поиск с учётом морфологии русского языка</div>
+    </div>
+    <div style="display:grid;grid-template-columns:88px 1fr;gap:12px 16px;align-items:start">
+      <div style="font-size:12px;color:#85897F;padding-top:7px">Раздел</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ kbThemes }}" as="t" hint-placeholder-count="7">
+          <div onClick="{{ t.pick }}" style="font-size:13px;padding:6px 14px;cursor:pointer;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div>
+        </sc-for>
+      </div>
+      <div style="font-size:12px;color:#85897F;padding-top:7px">Тип</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ kbTypes }}" as="t" hint-placeholder-count="5">
+          <div onClick="{{ t.pick }}" style="font-size:13px;padding:6px 14px;cursor:pointer;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div>
+        </sc-for>
+      </div>
+      <div style="font-size:12px;color:#85897F;padding-top:7px">Отрасль</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ kbInds }}" as="t" hint-placeholder-count="5">
+          <div onClick="{{ t.pick }}" style="font-size:13px;padding:6px 14px;cursor:pointer;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px">
+    <div style="font-size:13.5px;color:#85897F">{{ kbCountLabel }}</div>
+    <div onClick="{{ resetFilters }}" style="font-size:13px;color:#8E7328;cursor:pointer;font-weight:600">Сбросить фильтры</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+    <sc-for list="{{ kbList }}" as="a" hint-placeholder-count="6">
+      <div onClick="{{ a.open }}" style="background:#FFFFFF;padding:28px 32px;cursor:pointer;display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start" style-hover="background:#F3F1EA">
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328;margin-bottom:10px">{{ a.type }} · {{ a.theme }}</div>
+          <div style="font-family:'IBM Plex Serif',serif;font-size:22px;line-height:1.3;margin-bottom:10px">{{ a.title }}</div>
+          <div style="font-size:14px;line-height:1.6;color:#4F544E;max-width:52em">{{ a.summary }}</div>
+          <sc-if value="{{ a.stale }}">
+            <div style="margin-top:14px;background:#F3F1EA;border-left:3px solid #A34032;padding:10px 14px;font-size:13px;line-height:1.5;color:#4F544E">Материал не проверялся с {{ a.checkedLabel }}, законодательство могло измениться</div>
+          </sc-if>
+        </div>
+        <div style="text-align:right;font-size:12.5px;color:#85897F;line-height:1.7">
+          <div>Опубликовано {{ a.dateLabel }}</div>
+          <div>Проверено {{ a.checkedLabel }}</div>
+          <div style="color:#A3A79C;margin-top:8px">{{ a.industry }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ kbEmpty }}">
+    <div style="background:#FFFFFF;padding:56px 40px;text-align:left">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:26px;margin-bottom:12px">По запросу «{{ kbQuery }}» ничего не найдено</div>
+      <div style="font-size:15px;line-height:1.6;color:#4F544E;max-width:40em">Попробуйте более общую формулировку или снимите фильтры. Если вопрос срочный — опишите его в форме обращения, мы ответим, есть ли по нему готовая практика.</div>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{ isArticle }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — <span onClick="{{ goKb }}" style="cursor:pointer">База знаний</span> — {{ art.theme }}</div>
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:64px;padding-top:34px">
+    <article>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328;margin-bottom:18px">{{ art.type }}</div>
+      <h1 style="font-family:'IBM Plex Serif',serif;font-size:44px;line-height:1.12;font-weight:400;margin:0 0 22px">{{ art.title }}</h1>
+      <div style="width:64px;height:4px;background:#B0913F;margin-bottom:24px"></div>
+      <sc-if value="{{ art.stale }}">
+        <div style="background:#FFFFFF;border-left:3px solid #A34032;padding:16px 20px;font-size:14px;line-height:1.55;color:#4F544E;margin-bottom:28px">Материал не проверялся с {{ art.checkedLabel }}, законодательство могло измениться. Перед применением уточните текущую редакцию нормы.</div>
+      </sc-if>
+      <div style="font-size:17px;line-height:1.65;color:#4F544E;margin-bottom:28px;font-family:'IBM Plex Serif',serif">{{ art.summary }}</div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <sc-for list="{{ art.body }}" as="p" hint-placeholder-count="4">
+          <div style="font-size:16px;line-height:1.7">{{ p }}</div>
+        </sc-for>
+      </div>
+      <div style="background:#FFFFFF;border-left:3px solid #B0913F;padding:24px 28px;margin-top:32px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Вывод</div>
+        <div style="font-size:16px;line-height:1.65">{{ art.conclusion }}</div>
+      </div>
+      <div style="display:flex;gap:14px;margin-top:32px;align-items:center">
+        <div style="border:1px solid #DCD9CE;background:#FFFFFF;padding:13px 24px;font-size:14px;font-weight:500;cursor:pointer" style-hover="border-color:#B0913F">Скачать PDF на фирменном бланке</div>
+        <div style="font-size:13px;color:#85897F">Нормативная база на {{ art.checkedLabel }}</div>
+      </div>
+    </article>
+    <aside style="display:flex;flex-direction:column;gap:28px">
+      <div style="background:#FFFFFF;padding:26px 28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:14px">О материале</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13.5px;line-height:1.5">
+          <div style="color:#85897F">Автор</div><div>{{ art.author }}</div>
+          <div style="color:#85897F">Проверил</div><div>{{ art.reviewer }}</div>
+          <div style="color:#85897F">Опубликовано</div><div>{{ art.dateLabel }}</div>
+          <div style="color:#85897F">Проверено</div><div>{{ art.checkedLabel }}</div>
+          <div style="color:#85897F">Отрасль</div><div>{{ art.industry }}</div>
+        </div>
+      </div>
+      <div style="background:#17352C;color:#F3F1EA;padding:26px 28px">
+        <div style="font-family:'IBM Plex Serif',serif;font-size:21px;line-height:1.3;margin-bottom:10px">Подписка на разъяснения</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#C9CCC4;margin-bottom:16px">2–4 материала в месяц. Подтверждение адреса, отписка в один клик.</div>
+        <input value="{{ subEmail }}" onInput="{{ onSubEmail }}" placeholder="Рабочая почта" style="width:100%;padding:12px 14px;border:1px solid #4F6B62;background:#0F241E;color:#F3F1EA;font-size:14px;outline:none;margin-bottom:10px">
+        <div onClick="{{ subscribe }}" style="background:#B0913F;color:#17352C;font-size:14px;font-weight:600;padding:12px 18px;cursor:pointer;text-align:center">{{ subLabel }}</div>
+      </div>
+      <div style="background:#FFFFFF;padding:26px 28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:14px">Связанные материалы</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ relatedArticles }}" as="a" hint-placeholder-count="3">
+            <div onClick="{{ a.open }}" style="cursor:pointer;font-size:14.5px;line-height:1.45;border-bottom:1px solid #EFEDE4;padding-bottom:14px">{{ a.title }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isCases }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — Кейсы</div>
+  <div style="padding:34px 0 36px">
+    <h1 style="font-family:'IBM Plex Serif',serif;font-size:52px;line-height:1.08;font-weight:400;margin:0 0 20px">Кейсы</h1>
+    <div style="width:64px;height:4px;background:#B0913F;margin-bottom:22px"></div>
+    <p style="font-size:16px;line-height:1.65;color:#4F544E;max-width:46em;margin:0">Клиенты не называются. Все кейсы публикуются обезличенно: без наименований, реквизитов, точных сумм и узнаваемых деталей проекта. Это условие работы, а не оформление.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+    <sc-for list="{{ cases }}" as="c" hint-placeholder-count="6">
+      <div onClick="{{ c.open }}" style="background:#FFFFFF;padding:30px 32px;cursor:pointer;display:flex;flex-direction:column;gap:12px;min-height:210px" style-hover="background:#F3F1EA">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ c.industry }}</div>
+        <div style="font-family:'IBM Plex Serif',serif;font-size:23px;line-height:1.28">{{ c.title }}</div>
+        <div style="font-size:14px;line-height:1.6;color:#4F544E;flex:1">{{ c.task }}</div>
+        <div style="font-size:13.5px;font-weight:600;color:#17352C;border-top:1px solid #EFEDE4;padding-top:12px">{{ c.outcome }}</div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isCase }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — <span onClick="{{ goCases }}" style="cursor:pointer">Кейсы</span> — {{ kase.industry }}</div>
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:64px;padding-top:34px">
+    <article>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328;margin-bottom:18px">{{ kase.industry }}</div>
+      <h1 style="font-family:'IBM Plex Serif',serif;font-size:42px;line-height:1.12;font-weight:400;margin:0 0 22px">{{ kase.title }}</h1>
+      <div style="width:64px;height:4px;background:#B0913F;margin-bottom:28px"></div>
+      <div style="display:flex;flex-direction:column;gap:26px">
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Задача</div>
+          <div style="font-size:16px;line-height:1.7">{{ kase.task }}</div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Что сделали</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ kase.work }}" as="w" hint-placeholder-count="4">
+              <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:3px;height:20px;background:#B0913F;flex:none;margin-top:4px"></div><div style="font-size:15.5px;line-height:1.6;color:#4F544E">{{ w }}</div></div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:#FFFFFF;border-left:3px solid #B0913F;padding:24px 28px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Результат</div>
+          <div style="font-size:16px;line-height:1.65">{{ kase.outcome }}</div>
+        </div>
+      </div>
+    </article>
+    <aside style="display:flex;flex-direction:column;gap:28px">
+      <div style="background:#FFFFFF;padding:26px 28px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:14px">Параметры работы</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13.5px;line-height:1.5">
+          <div style="color:#85897F">Направление</div><div>{{ kase.dirTitle }}</div>
+          <div style="color:#85897F">Отрасль</div><div>{{ kase.industry }}</div>
+          <div style="color:#85897F">Срок</div><div>{{ kase.term }}</div>
+          <div style="color:#85897F">Формат</div><div>{{ kase.format }}</div>
+        </div>
+      </div>
+      <div style="background:#F3F1EA;border:1px solid #DCD9CE;padding:22px 24px;font-size:13px;line-height:1.6;color:#4F544E">Кейс обезличен: удалены наименование клиента, реквизиты, суммы, контрагенты и детали, позволяющие установить сторону.</div>
+    </aside>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+<main>
+  <section style="background:#17352C;color:#F3F1EA">
+    <div style="max-width:1240px;margin:0 auto;padding:26px 40px 60px">
+      <div style="font-size:12.5px;color:#9DA29A;margin-bottom:40px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — О компании</div>
+      <h1 style="font-family:'IBM Plex Serif',serif;font-size:50px;line-height:1.08;font-weight:400;margin:0;max-width:16em">Двадцать пять лет письменной практики</h1>
+      <div style="width:64px;height:4px;background:#B0913F;margin:26px 0 22px"></div>
+      <p style="font-size:17px;line-height:1.65;color:#C9CCC4;max-width:42em;margin:0">ООО «Я.Н.С. – Консалт» ведёт налоговое и юридическое консультирование с 2001 года. Каждая позиция оформляется письменно: норма, позиция Минфина и ФНС, актуальная арбитражная практика, вывод и рекомендация.</p>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#DCD9CE;border:1px solid #DCD9CE">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="5">
+        <div style="background:#FFFFFF;padding:28px 30px">
+          <div style="font-family:'IBM Plex Serif',serif;font-size:36px;line-height:1">{{ f.n }}</div>
+          <div style="font-size:13px;line-height:1.5;color:#85897F;margin-top:8px">{{ f.t }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 0">
+    <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:28px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:32px">Команда</div>
+      <div style="flex:1;height:1px;background:#DCD9CE"></div>
+      <div style="font-size:12.5px;color:#85897F">Фотографии в едином чёрно-белом ключе готовятся</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <sc-for list="{{ team }}" as="m" hint-placeholder-count="3">
+        <div style="background:#FFFFFF">
+          <div style="background:#17352C;height:150px"></div>
+          <div style="padding:22px 24px 26px">
+            <div style="font-family:'IBM Plex Serif',serif;font-size:20px;line-height:1.3;margin-bottom:6px">{{ m.name }}</div>
+            <div style="font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8E7328;margin-bottom:12px">{{ m.role }}</div>
+            <div style="font-size:13.5px;line-height:1.6;color:#85897F">{{ m.about }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1240px;margin:0 auto;padding:56px 40px 88px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div style="background:#FFFFFF;padding:32px 34px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:14px">Как мы работаем</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ principles }}" as="p" hint-placeholder-count="4">
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:3px;height:20px;background:#B0913F;flex:none;margin-top:4px"></div><div style="font-size:15px;line-height:1.6;color:#4F544E">{{ p }}</div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;padding:32px 34px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:14px">Группа компаний</div>
+        <p style="font-size:15px;line-height:1.65;color:#4F544E;margin:0 0 16px">Аудит, обзорная проверка, МСФО, налоговый и форензик-аудит, финансовый и налоговый due diligence оказываются аудиторской компанией группы — yans-audit.ru. Бухгалтерское и кадровое обслуживание ведёт отдельное юридическое лицо.</p>
+        <p style="font-size:15px;line-height:1.65;color:#4F544E;margin:0">ЯНС Консалт отвечает за налоговую, юридическую и оценочную часть: диагностику риска до сделки, сопровождение проверки и спора, структурирование, регистрационные действия, банкротство, оценку.</p>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isContacts }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:0 40px 88px">
+  <div style="padding:26px 0 0;font-size:12.5px;color:#85897F"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> — Контакты</div>
+  <div style="padding:34px 0 36px">
+    <h1 style="font-family:'IBM Plex Serif',serif;font-size:52px;line-height:1.08;font-weight:400;margin:0 0 20px">Контакты</h1>
+    <div style="width:64px;height:4px;background:#B0913F"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:#FFFFFF;padding:44px 46px;display:flex;flex-direction:column;gap:28px">
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Адрес</div>
+        <div style="font-size:17px;line-height:1.6">{{ address }}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Телефон</div>
+        <div style="font-family:'IBM Plex Serif',serif;font-size:30px;line-height:1">{{ phone }}</div>
+        <div style="font-size:14.5px;color:#4F544E;margin-top:8px">Факс {{ fax }}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Почта</div>
+        <div style="font-size:17px">{{ email }}</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Реквизиты</div>
+        <div style="font-size:14.5px;line-height:1.7;color:#4F544E">ООО «Я.Н.С. – Консалт»<br>127083, Москва, ул. 8 Марта, д. 1, стр. 12, БЦ «ТРИО», корп. 3, 4 этаж</div>
+      </div>
+      <div style="margin-top:auto">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:10px">Как добраться</div>
+        <div style="font-size:14.5px;line-height:1.7;color:#4F544E;margin-bottom:14px">Бизнес-центр «ТРИО», корпус 3, 4 этаж. Вход по документу, удостоверяющему личность — предупредите о визите заранее по телефону {{ phone }}, пропуск закажем ко времени встречи.</div>
+        <div style="background:#F3F1EA;border:1px solid #DCD9CE;height:180px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#85897F;text-align:center;padding:20px">Место под интерактивную карту (Яндекс.Карты)<br>с точкой БЦ «ТРИО», ул. 8 Марта, д. 1, стр. 12</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;padding:44px 46px">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:30px;line-height:1.2;margin-bottom:14px">Обращение</div>
+      <div style="width:56px;height:4px;background:#B0913F;margin-bottom:20px"></div>
+      <dc-import name="Форма обращения ЯНС" hint-size="100%,460px"></dc-import>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ is404 }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1240px;margin:0 auto;padding:96px 40px 140px">
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:64px;align-items:start">
+    <div>
+      <div style="font-family:'IBM Plex Serif',serif;font-size:96px;line-height:1;color:#B0913F">404</div>
+      <h1 style="font-family:'IBM Plex Serif',serif;font-size:42px;line-height:1.12;font-weight:400;margin:24px 0 20px">Страница не найдена</h1>
+      <div style="width:64px;height:4px;background:#B0913F;margin-bottom:22px"></div>
+      <p style="font-size:16px;line-height:1.65;color:#4F544E;max-width:38em;margin:0 0 28px">Адрес мог измениться после обновления структуры сайта. Начните с базы знаний или перечня направлений — материал почти наверняка на месте.</p>
+      <div style="display:flex;gap:14px">
+        <div onClick="{{ goKb }}" style="background:#17352C;color:#F3F1EA;font-size:15px;font-weight:600;padding:15px 28px;cursor:pointer">В базу знаний</div>
+        <div onClick="{{ goServices }}" style="border:1px solid #DCD9CE;background:#FFFFFF;font-size:15px;font-weight:500;padding:15px 28px;cursor:pointer" style-hover="border-color:#B0913F">К направлениям</div>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;padding:0;position:relative;height:260px;overflow:hidden">
+      <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr)">
+        <div></div><div></div><div style="background:#17352C"></div><div></div>
+        <div></div><div style="background:#B0913F"></div><div></div><div></div>
+        <div style="background:#17352C"></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div style="background:#DCD9CE"></div>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<footer style="background:#17352C;color:#C9CCC4">
+  <div style="max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px">
+    <div>
+      <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:repeat(3,12px);grid-template-rows:repeat(3,12px);gap:3px">
+          <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div></div>
+          <div style="background:#B0913F"></div><div style="background:#F3F1EA"></div><div></div>
+          <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div style="background:#F3F1EA"></div>
+        </div>
+        <div>
+          <div style="font-size:18px;line-height:1;color:#F3F1EA"><span style="font-weight:700">ЯНС</span> <span style="font-weight:300;letter-spacing:0.08em">КОНСАЛТ</span></div>
+          <div style="height:2px;background:#B0913F;margin:6px 0 5px;width:152px"></div>
+          <div style="font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:#9DA29A">юридические и финансовые консультации</div>
+        </div>
+      </div>
+      <div style="font-size:13px;line-height:1.7;color:#9DA29A">ООО «Я.Н.С. – Консалт»<br>{{ address }}<br>Телефон {{ phone }} · факс {{ fax }}<br>{{ email }}</div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#B0913F;margin-bottom:16px">Разделы</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+          <div onClick="{{ item.go }}" style="font-size:14px;cursor:pointer;color:#C9CCC4" style-hover="color:#F3F1EA">{{ item.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#B0913F;margin-bottom:16px">Направления</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ footerDirs }}" as="d" hint-placeholder-count="6">
+          <div onClick="{{ d.open }}" style="font-size:14px;cursor:pointer;color:#C9CCC4;line-height:1.4" style-hover="color:#F3F1EA">{{ d.title }}</div>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#B0913F;margin-bottom:16px">Служебные</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#C9CCC4">
+        <div style="cursor:pointer" style-hover="color:#F3F1EA">Политика конфиденциальности</div>
+        <div style="cursor:pointer" style-hover="color:#F3F1EA">Согласие на обработку данных</div>
+        <div style="cursor:pointer" style-hover="color:#F3F1EA">Карта сайта</div>
+        <div onClick="{{ go404 }}" style="cursor:pointer" style-hover="color:#F3F1EA">Страница 404</div>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid #2C544A">
+    <div style="max-width:1240px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;font-size:12px;color:#6C7570">
+      <div>© 2001–2026 ООО «Я.Н.С. – Консалт»</div>
+      <div>Информация на сайте не является публичной офертой и налоговой консультацией по конкретной ситуации</div>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+7 495 103-10-51&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Реквизиты&quot;}}">
+const S = (t, q, r) => ({ t, q, r });
+
+const DIRECTIONS = [
+  { roman: 'I', title: 'Налоговое консультирование', short: 'Ядро практики: 704 письменные работы, 39 тем, 350 клиентов.',
+    lead: 'Письменный ответ на вопрос по конкретной операции — с нормой, позицией Минфина и ФНС и актуальной арбитражной практикой. Разово и на абонентской основе, для российских и иностранных организаций.',
+    when: ['Возник вопрос по операции: как облагается, что с вычетом, какие документы нужны', 'Нет штатного налогового специалиста, а решения принимать надо еженедельно', 'Учёт ведётся, но система не описана — при проверке нечего предъявить', 'Иностранная компания начинает работу в России и впервые сдаёт отчётность', 'Нужна позиция, на которую можно сослаться в споре с инспекцией'],
+    included: ['Разовые и абонентские консультации — устно, письменно, очно и по телефону', 'Анализ операции с учётом гражданско-правовой конструкции сделки', 'Проверка позиции Минфина и ФНС и подбор арбитражной практики', 'Разработка альтернативных вариантов и помощь в выборе', 'Подготовка учётной политики и внутреннего регламента', 'Запросы в Минфин и ФНС от имени компании'],
+    result: 'Письменная консультация с анализом, выводами и рекомендациями. Формат — документ на фирменном бланке, пригодный для предъявления инспекции и аудитору.',
+    term: 'Устный ответ — в день обращения. Письменная консультация — 3–10 рабочих дней в зависимости от объёма.',
+    border: 'Систематическая проверка исчисления налогов за период — налоговый аудит аудиторской компании группы. Мы оцениваем риск по конкретной сделке до её совершения.',
+    services: [S('Консультирование по налогообложению и бухгалтерскому учёту', 'Вопрос по конкретной операции или потребность в постоянной поддержке', 'Письменная консультация либо устный ответ в согласованный срок'), S('Налоговая диагностика и оценка рисков по сделкам', 'Сделка не проведена, структура нестандартная', 'Заключение с вариантами и обоснованием выбора'), S('Постановка и сопровождение налогового учёта', 'Учёт ведётся, но система не описана', 'Учётная политика, регламент и периодический контроль'), S('Декларирование налогов', 'Иностранная компания или физическое лицо впервые отчитывается в РФ', 'Сданные декларации и контроль сроков'), S('Экспертные заключения и запросы в Минфин и ФНС', 'Нужна официальная позиция ведомства по спорной норме', 'Запрос и полученный письменный ответ ведомства')] },
+  { roman: 'II', title: 'Налоговые проверки и споры', short: 'Полный цикл: от анализа рисков до кассационной инстанции.',
+    lead: 'Отдельная линия работы: от анализа деятельности до начала проверки — до кассации. Более 90 % выигранных судебных споров по данным практики компании.',
+    when: ['Получено требование о представлении документов или пояснений', 'Назначена выездная проверка или начата предпроверочная работа', 'Вызывают на комиссию по легализации налоговой базы', 'Составлен акт проверки, нужны возражения', 'Решение вступило в силу и требуется судебное обжалование'],
+    included: ['Анализ финансово-хозяйственной деятельности до начала проверки', 'Подготовка сотрудников к допросам и осмотрам, присутствие представителя', 'Проверка каждого документа перед передачей налоговому органу', 'Возражения на акт и участие в рассмотрении материалов', 'Апелляционная жалоба в вышестоящий налоговый орган', 'Ведение дела в первой, апелляционной и кассационной инстанциях'],
+    result: 'Возражения, жалобы и процессуальные документы, представительство на всех этапах. По итогам — решение по проверке или судебный акт.',
+    term: 'Реагирование на требование — в течение срока ответа. Сопровождение проверки — весь период мероприятий.',
+    border: 'Проверку отчётности за период ведёт аудиторская компания. Мы вступаем там, где риск реализовался: инспекция запросила, начислила, вышла на проверку.',
+    services: [S('Анализ деятельности до начала проверки', 'Есть признаки предпроверочного анализа', 'Карта рисков и план подготовки'), S('Сопровождение налоговой проверки', 'Проверка назначена', 'Представитель на всех мероприятиях, контроль процедуры'), S('Работа с документами для налогового органа', 'Пришло требование о представлении документов', 'Проверенный и описанный комплект с сопроводительным письмом'), S('Представление интересов при мероприятиях контроля', 'Допросы, осмотры, выемка, комиссии', 'Присутствие представителя и фиксация нарушений процедуры'), S('Возражения на акт проверки', 'Составлен акт с доначислениями', 'Возражения и участие в рассмотрении материалов'), S('Досудебное урегулирование спора', 'Решение принято, срок на жалобу идёт', 'Апелляционная жалоба в вышестоящий орган'), S('Судебная защита по налоговым спорам', 'Досудебный порядок исчерпан', 'Ведение дела до кассационной инстанции')] },
+  { roman: 'III', title: 'Трансфертное ценообразование', short: 'Практика с 2014 года, непрерывно с 2019 по 2025 год.',
+    lead: 'Выявление контролируемых сделок, уведомления, документация и защита методики в споре. Одна группа обслуживается семь лет подряд.',
+    when: ['В группе есть сделки с взаимозависимыми лицами или через посредников', 'Приближается срок уведомления о контролируемых сделках', 'Инспекция запросила обоснование цены', 'Планируется внутригрупповая сделка и нужна методика заранее'],
+    included: ['Анализ периметра сделок и проверка критериев контролируемости', 'Подготовка и подача уведомления о контролируемых сделках', 'Выбор метода, бенчмарк-исследование и расчёт интервала рентабельности', 'Документация по ТЦО с приложениями и расчётами', 'Сопровождение проверки цен и спора по ТЦО'],
+    result: 'Уведомление, документация по ТЦО с бенчмарком и расчётом рентабельности по группе сделок.',
+    term: 'Документация — 3–6 недель на группу сделок. Уведомление — до 10 рабочих дней.',
+    border: 'Аудиторская компания подтверждает данные отчётности. Мы формируем методику и защищаем её перед инспекцией.',
+    services: [S('Выявление контролируемых сделок', 'Непонятно, какие сделки попадают под контроль', 'Перечень контролируемых сделок с обоснованием'), S('Уведомление о контролируемых сделках', 'Наступает срок подачи уведомления', 'Заполненное и поданное уведомление'), S('Документация по ТЦО', 'Требуется обоснование цены по группе сделок', 'Документация с бенчмарком и расчётом рентабельности'), S('Сопровождение проверок и споров по ТЦО', 'Инспекция оспаривает применённый метод', 'Пояснения, возражения, представительство')] },
+  { roman: 'IV', title: 'Международное налогообложение и КИК', short: 'В работах затронуты 18 юрисдикций.',
+    lead: 'Соглашения об избежании двойного налогообложения, фактическое право на доход, контролируемые иностранные компании, валютный контроль.',
+    when: ['Есть доля в иностранной компании или зарубежные счета', 'Выплачиваются дивиденды, проценты или роялти за рубеж', 'Нужно подтвердить фактическое право на доход', 'Приближается срок уведомления о КИК или декларации', 'Операции по зарубежному счёту требуют проверки на валютные ограничения'],
+    included: ['Диагностика структуры владения и налоговых последствий', 'Уведомления об участии и о КИК', 'Подготовка финансовой отчётности КИК и налогового регистра', 'Расчёт прибыли КИК и налога, декларация', 'Проверка операций по счетам на соответствие валютному законодательству', 'Представление интересов при запросах налогового органа'],
+    result: 'Поданные уведомления и декларации, расчёт прибыли КИК, заключение по структуре владения.',
+    term: 'Уведомления — по срокам НК РФ. Расчёт прибыли и декларация — 2–4 недели.',
+    border: 'Аудит отчётности КИК по международным стандартам, если он требуется законом юрисдикции, ведёт аудиторская компания. Расчёт прибыли и декларирование — наша часть.',
+    services: [S('Международное налоговое планирование и СИДН', 'Планируются трансграничные выплаты', 'Заключение с расчётом налога у источника'), S('Диагностика структуры владения', 'Структура сложилась исторически и не проверялась', 'Карта рисков по структуре'), S('Уведомления об участии и о КИК', 'Наступил срок уведомления', 'Поданные уведомления'), S('Финансовая отчётность КИК и расчёт прибыли', 'Нужно определить прибыль КИК для налога', 'Отчётность, налоговый регистр, расчёт'), S('Декларация по КИК и представление интересов', 'Требуется задекларировать прибыль и ответить на запросы', 'Декларация и сопровождение переписки'), S('Валютное регулирование', 'Операции по зарубежному счёту', 'Заключение о допустимости операций и отчётность')] },
+  { roman: 'V', title: 'Корпоративное право и структурирование бизнеса', short: 'От выбора конструкции до сопровождения перехода.',
+    lead: 'Юридическая проработка вариантов организации бизнеса: холдинговая структура, распределение функций, корпоративные договорённости, договорная работа.',
+    when: ['Бизнес вырос, а юридическая структура осталась прежней', 'Партнёры расходятся во взглядах на управление', 'Нужен единый стандарт договоров', 'Планируется переход на новую структуру владения'],
+    included: ['Разовые и абонентские юридические консультации', 'Проработка вариантов реструктуризации и налоговых последствий', 'Корпоративные договоры, уставы, положения об органах управления', 'Сопровождение корпоративных конфликтов', 'Разработка типовых форм договоров и регламента договорной работы'],
+    result: 'Схема структуры с обоснованием, комплект корпоративных документов, типовые формы договоров.',
+    term: 'Проработка структуры — 2–5 недель. Договорная работа — по объёму.',
+    border: 'Оценка и построение системы внутреннего контроля — зона аудиторской компании. Мы отвечаем за правовую и налоговую сторону регламентов.',
+    services: [S('Разовые и абонентские юридические консультации', 'Нужна правовая позиция по текущему вопросу', 'Письменная или устная консультация'), S('Реструктуризация бизнеса', 'Структура не соответствует масштабу и задачам', 'Схема с планом перехода и налоговой оценкой'), S('Корпоративное управление и конфликты', 'Спор участников или блокировка решений', 'Документы органов управления, представительство'), S('Договорная работа', 'Договоры готовятся каждый раз заново', 'Типовые формы и регламент согласования'), S('Услуги управляющей компании', 'Требуется передача функций единоличного органа', 'Договор управления и сопровождение')] },
+  { roman: 'VI', title: 'Регистрационные действия', short: 'Полный цикл — от создания компании до ликвидации.',
+    lead: 'Регистрация, изменения в ЕГРЮЛ, аккредитация иностранных представительств, реорганизация и ликвидация — с подготовкой всего комплекта документов.',
+    when: ['Создаётся новое юридическое лицо или ИП', 'Меняются участники, адрес, наименование или устав', 'Иностранная компания открывает представительство или филиал', 'Принято решение о реорганизации или ликвидации'],
+    included: ['Подготовка комплекта документов и решений', 'Подача и получение документов в регистрирующем органе', 'Аккредитация иностранных представительств и филиалов', 'Сопровождение реорганизации: уведомления, публикации, передаточные документы', 'Ликвидация: от решения до исключения из ЕГРЮЛ'],
+    result: 'Зарегистрированные изменения, лист записи ЕГРЮЛ, комплект внутренних документов.',
+    term: 'Регистрация изменений — от 5 рабочих дней. Ликвидация — от 4 месяцев.',
+    border: 'Регистрационные действия целиком в зоне ЯНС Консалт.',
+    services: [S('Создание юридических лиц и ИП', 'Нужно зарегистрировать новую компанию', 'Регистрация, устав, лист записи'), S('Изменения в учредительных документах и ЕГРЮЛ', 'Меняются данные компании', 'Внесённые изменения в реестре'), S('Аккредитация представительств и филиалов', 'Иностранная компания выходит на рынок РФ', 'Свидетельство об аккредитации'), S('Реорганизация', 'Сливаются или разделяются юридические лица', 'Завершённая процедура и записи в ЕГРЮЛ'), S('Ликвидация', 'Компания прекращает деятельность', 'Исключение из ЕГРЮЛ')] },
+  { roman: 'VII', title: 'Судебная защита и взыскание задолженности', short: 'Более 350 выигранных гражданских и арбитражных дел.',
+    lead: 'Досудебная работа, ведение дела во всех инстанциях, розыск активов и исполнительное производство. Свыше 90 % выигранных судебных споров.',
+    when: ['Контрагент не платит, а претензия осталась без ответа', 'Предъявлен иск к компании', 'Решение суда есть, но деньги не поступают', 'Кадастровая стоимость объекта завышена'],
+    included: ['Досудебный анализ перспектив и претензионная работа', 'Подготовка иска, отзыва, ходатайств и процессуальных документов', 'Представительство в первой, апелляционной и кассационной инстанциях', 'Розыск активов должника и обеспечительные меры', 'Сопровождение исполнительного производства'],
+    result: 'Судебный акт, исполнительный лист, фактическое взыскание.',
+    term: 'Претензионная стадия — 30 дней. Первая инстанция — от 3 месяцев.',
+    border: 'Правовые последствия выявленных злоупотреблений ведём мы; выявление искажений отчётности — форензик-аудит аудиторской компании.',
+    services: [S('Представление интересов в суде всех инстанций', 'Спор дошёл до суда', 'Процессуальные документы и судебный акт'), S('Досудебный анализ и претензионная работа', 'Нужно оценить перспективы до иска', 'Заключение о перспективах и претензия'), S('Розыск активов должника', 'Должник выводит имущество', 'Отчёт об активах и обеспечительные меры'), S('Исполнительное производство', 'Решение не исполняется', 'Контроль пристава и фактическое взыскание'), S('Оспаривание кадастровой стоимости', 'Налог на имущество завышен', 'Установленная рыночная стоимость и перерасчёт')] },
+  { roman: 'VIII', title: 'Банкротство и субсидиарная ответственность', short: 'Аккредитация при Палате арбитражных управляющих ЦФО.',
+    lead: 'Ведение процедур любой сложности: подготовка компании, банкротство по инициативе кредитора, оспаривание сделок, защита от субсидиарной ответственности.',
+    when: ['Признаки неплатёжеспособности и риск заявления кредитора', 'Должник не платит и подаёт признаки вывода активов', 'Оспариваются сделки должника за трёхлетний период', 'Предъявлено требование о субсидиарной ответственности к руководителю'],
+    included: ['Диагностика сделок и обязательств до подачи заявления', 'Подготовка и ведение процедуры банкротства', 'Заявление кредитора и включение в реестр требований', 'Оспаривание сделок и возврат активов в конкурсную массу', 'Защита руководителей и бенефициаров от субсидиарной ответственности'],
+    result: 'Процессуальная позиция и документы, включение в реестр, возврат активов либо освобождение от ответственности.',
+    term: 'Процедура — от 6 месяцев. Обособленный спор — 3–8 месяцев.',
+    border: 'Финансовый анализ и выявление схем — аудиторская сторона. Правовые последствия и процедура — наша.',
+    services: [S('Подготовка компании к банкротству', 'Есть признаки неплатёжеспособности', 'План действий и оценка рисков руководителя'), S('Ведение процедуры банкротства', 'Процедура введена', 'Сопровождение на всех стадиях'), S('Банкротство должника по инициативе кредитора', 'Должник не платит', 'Заявление кредитора и включение в реестр'), S('Оспаривание сделок и возврат активов', 'Активы выведены перед процедурой', 'Судебные акты о признании сделок недействительными'), S('Субсидиарная ответственность', 'Требование к руководителю или бенефициару', 'Позиция защиты и представительство')] },
+  { roman: 'IX', title: 'Сделки M&A и подготовка бизнеса к продаже', short: 'Сопровождение под ключ — от term sheet до регистрации перехода прав.',
+    lead: 'Структурирование сделки, юридический due diligence, координация всех видов экспертизы, договорная защита интересов и регистрация перехода прав.',
+    when: ['Планируется продажа доли или бизнеса целиком', 'Найден покупатель и нужно зафиксировать условия', 'Требуется проверить объект перед покупкой', 'Бизнес не автономен от собственника и это снижает цену'],
+    included: ['Структурирование сделки и налоговое моделирование вариантов', 'Соглашение о намерениях (term sheet)', 'Юридический due diligence и сведение результатов экспертизы в карту рисков', 'Оценка бизнеса для целей сделки', 'Анализ автономности бизнеса от собственника', 'Формирование Data Room', 'Договор купли-продажи, заверения и гарантии, механизмы расчётов', 'Нотариальное удостоверение и регистрация перехода прав'],
+    result: 'Комплект сделки: term sheet, отчёт due diligence, карта рисков, договор и зарегистрированный переход прав.',
+    term: 'Полное сопровождение сделки — 2–6 месяцев в зависимости от масштаба.',
+    border: 'Финансовый и налоговый due diligence — аудиторская компания. Мы ведём юридический due diligence, структурирование и документы сделки.',
+    services: [S('Структурирование сделки', 'Непонятно, как оформить сделку с минимальным риском', 'Схема сделки с налоговым моделированием'), S('Соглашение о намерениях (term sheet)', 'Условия согласованы устно', 'Подписанный term sheet'), S('Юридический due diligence', 'Нужно проверить объект перед покупкой', 'Отчёт и карта рисков'), S('Оценка бизнеса для целей сделки', 'Стороны расходятся в цене', 'Отчёт об оценке'), S('Анализ автономности бизнеса', 'Бизнес завязан на собственника', 'Заключение с планом развязки'), S('Формирование Data Room', 'Покупатель запрашивает документы', 'Структурированный комплект с регламентом доступа'), S('Договор купли-продажи и защита интересов', 'Нужны заверения, гарантии и механизм расчётов', 'Договор и сопутствующие соглашения'), S('Сопровождение регистрации под ключ', 'Сделка подписана', 'Зарегистрированный переход прав')] },
+  { roman: 'X', title: 'Частные клиенты и планирование благосостояния', short: 'Отдельная линия для собственников и физических лиц.',
+    lead: 'Декларирование зарубежных активов, личные сделки, защита прав участника, преемственность. Конфиденциальность и личный контакт с партнёром.',
+    when: ['Есть иностранные компании, счета или недвижимость за рубежом', 'Продаётся доля в бизнесе или крупный актив', 'Получено требование из инспекции по декларации 3-НДФЛ', 'Нужно продумать переход активов следующему поколению'],
+    included: ['Декларирование участия в иностранных компаниях и счетов', 'Правовая и налоговая экспертиза личных сделок', 'Сопровождение продажи бизнеса на стороне собственника', 'Защита прав акционера и участника', 'Личные фонды и планирование преемственности', 'Представление интересов в налоговых органах и спорах'],
+    result: 'Поданные уведомления и декларации, заключения по сделкам, документы личного фонда.',
+    term: 'Декларирование — по срокам НК РФ. Планирование преемственности — 1–3 месяца.',
+    border: 'Полностью в зоне ЯНС Консалт. Разделы о личных фондах и преемственности проверяются до публикации.',
+    services: [S('Декларирование участия в иностранных компаниях и счетов', 'Появились зарубежные активы', 'Поданные уведомления и отчёты о движении средств'), S('Представление интересов и налоговые споры', 'Инспекция запрашивает пояснения по доходам', 'Ответы, возражения, представительство'), S('Правовая и налоговая экспертиза личных сделок', 'Планируется крупная личная сделка', 'Заключение с расчётом налога'), S('Сопровождение продажи бизнеса для собственника', 'Собственник выходит из бизнеса', 'Сделка и налоговое сопровождение'), S('Защита прав акционера и участника', 'Права участника нарушаются', 'Позиция и представительство'), S('Личные фонды', 'Рассматривается личный фонд как форма владения', 'Устав, условия управления, налоговая оценка'), S('Планирование благосостояния и преемственность', 'Нужен план перехода активов', 'Схема владения и порядок преемственности')] },
+  { roman: 'XI', title: 'Оценка и инвестиционная экспертиза', short: 'Оценщики — действующие члены СРО «Российское общество оценщиков».',
+    lead: 'Оценка недвижимости, бизнеса, оборудования и нематериальных активов, в том числе для целей МСФО и US GAAP, а также бизнес-планы и ТЭО.',
+    when: ['Требуется отчёт об оценке для сделки, суда или банка', 'Оспаривается кадастровая стоимость', 'Нужно распределить стоимость приобретения (PPA)', 'Готовится инвестиционный проект и нужен меморандум'],
+    included: ['Оценка недвижимости и имущественных комплексов', 'Оценка бизнеса, пакетов акций и долей', 'Оценка машин и оборудования', 'Оценка нематериальных активов и интеллектуальной собственности', 'Оценка для целей МСФО и US GAAP, включая PPA', 'Бизнес-планы, инвестиционные меморандумы и ТЭО'],
+    result: 'Отчёт об оценке в соответствии с ФСО, пригодный для суда, банка и аудитора.',
+    term: 'Отчёт — 2–4 недели в зависимости от объекта.',
+    border: 'Трансформация и аудит отчётности по МСФО — аудиторская компания. Оценка активов для целей МСФО и PPA — наша.',
+    services: [S('Оценка недвижимости и имущественных комплексов', 'Нужна рыночная стоимость объекта', 'Отчёт об оценке по ФСО'), S('Оценка бизнеса, пакетов акций и долей', 'Сделка, спор или внесение в капитал', 'Отчёт с обоснованием стоимости'), S('Оценка машин и оборудования', 'Продажа, залог, постановка на учёт', 'Отчёт об оценке'), S('Оценка нематериальных активов и ИС', 'Права требуют стоимостной оценки', 'Отчёт по НМА'), S('Оценка для целей МСФО и US GAAP', 'Требование стандартов отчётности', 'Отчёт, включая распределение стоимости приобретения'), S('Бизнес-планы, меморандумы и ТЭО', 'Проект выносится на инвестора или банк', 'Бизнес-план или инвестиционный меморандум')] },
+  { roman: 'XII', title: 'Управленческий консалтинг и автоматизация', short: 'Внедрение 1С:ERP на типовой версии, без бесконечных доработок.',
+    lead: 'Организационная схема бизнеса, управленческая отчётность и внедрение 1С:ERP с подготовкой учётных данных к переносу.',
+    when: ['Данные для управленческих решений собираются вручную', 'Учётные системы не связаны между собой', 'Планируется переход на 1С:ERP', 'Организационная схема не описана и ответственность размыта'],
+    included: ['Обследование процессов и постановка задачи на автоматизацию', 'Внедрение 1С:ERP на типовой версии', 'Подготовка и выверка учётных данных к переносу', 'Разработка организационной схемы бизнеса', 'Постановка управленческой отчётности'],
+    result: 'Работающая система, перенесённые данные, регламент управленческой отчётности.',
+    term: 'Внедрение — от 3 месяцев в зависимости от контура.',
+    border: 'Аудит бизнес-процессов и системы внутреннего контроля — аудиторская компания. Мы отвечаем за организационную схему, данные и внедрение.',
+    services: [S('Внедрение 1С:ERP', 'Система не покрывает потребности учёта', 'Работающий типовой контур'), S('Разработка организационной схемы бизнеса', 'Ответственность размыта', 'Схема с распределением функций'), S('Подготовка учётных данных к переносу', 'Данные в разных системах и не сходятся', 'Выверенный массив для переноса'), S('Постановка управленческой отчётности', 'Отчётность собирается вручную', 'Комплект форм и регламент')] }
+];
+
+const INDUSTRIES = [
+  { title: 'Транспорт, логистика и экспедирование', count: 121, years: 25, spec: 'Ставка НДС 0 % при международной перевозке и транспортной экспедиции, перевалка в портах, аренда вагонов и подвижного состава, расчёты с иностранными перевозчиками.',
+    questions: ['Как подтвердить ставку 0 % при экспедировании с участием нескольких перевозчиков', 'Что с НДС при перевалке груза в порту и хранении на терминале', 'Как облагается аренда вагонов у иностранного собственника', 'Кто налоговый агент при расчётах с иностранным перевозчиком'], dirs: ['I', 'II', 'IV'] },
+  { title: 'Финансы, инвестиции и управление активами', count: 81, years: 20, spec: 'ЗПИФ и паевые фонды, брокерская деятельность и функции налогового агента, ЦФА, лизинг, сделки с ценными бумагами.',
+    questions: ['Признаётся ли реализацией передача имущества в ЗПИФ', 'Как исполняются функции налогового агента по операциям с паями', 'Налогообложение цифровых финансовых активов', 'Учёт и налоги по договору лизинга у сторон'], dirs: ['I', 'X', 'XI'] },
+  { title: 'Недвижимость, строительство и девелопмент', count: 71, years: 22, spec: 'Налогообложение застройщика, долевое строительство, продажа объектов через сделки с акциями, кадастровая стоимость, аренда и субаренда.',
+    questions: ['НДС при уступке прав по договору долевого участия', 'Налог на имущество по кадастровой стоимости и её оспаривание', 'Продажа объекта напрямую или через долю в компании', 'Учёт неотделимых улучшений при аренде'], dirs: ['I', 'VII', 'XI'] },
+  { title: 'Частные клиенты и семейный капитал', count: 53, years: 18, spec: 'КИК, зарубежные счета, продажа долей и недвижимости, структурирование владения, декларирование доходов.',
+    questions: ['Как считать прибыль КИК и когда возникает налог', 'Освобождение от НДФЛ при продаже доли после пяти лет владения', 'Какие операции по зарубежному счёту допустимы', 'Как перевести активы следующему поколению'], dirs: ['IV', 'X', 'V'] },
+  { title: 'ИТ, медиа и реклама', count: 52, years: 15, spec: 'ИТ-льготы и аккредитация, передача прав на программное обеспечение, рекламные услуги, расчёты с иностранными платформами.',
+    questions: ['Сохраняется ли льгота при доработке чужого программного обеспечения', 'НДС при передаче прав на ПО с 2021 года', 'Налог у источника при расчётах с иностранной платформой', 'Учёт расходов на рекламу в интернете'], dirs: ['I', 'IV', 'V'] },
+  { title: 'Сельское хозяйство и АПК', count: 20, years: 16, spec: 'Экспорт зерна и сельхозпродукции, ставка 0 % и подтверждение экспорта, ЕСХН, субсидии.',
+    questions: ['Комплект документов для подтверждения экспорта зерна', 'Право на ЕСХН при переработке покупного сырья', 'Налогообложение субсидий', 'Вычеты при экспорте через посредника'], dirs: ['I', 'II', 'III'] },
+  { title: 'Фармацевтика, медтехника и здравоохранение', count: 19, years: 14, spec: 'Ставки НДС на медицинские изделия, регистрационные удостоверения, ввоз оборудования, расчёты с иностранными правообладателями.',
+    questions: ['Ставка НДС при отсутствии регистрационного удостоверения', 'Льгота по медицинским изделиям и её подтверждение', 'Ввоз оборудования и вычет НДС', 'Роялти иностранному правообладателю'], dirs: ['I', 'IV', 'II'] },
+  { title: 'Производство и промышленность', count: 19, years: 20, spec: 'Модернизация основных средств, давальческое сырьё, вычеты по капитальным вложениям, обособленные подразделения.',
+    questions: ['Ремонт или модернизация: как квалифицировать затраты', 'Учёт давальческого сырья у переработчика', 'Вычет НДС по капитальным вложениям', 'Уплата налогов по обособленным подразделениям'], dirs: ['I', 'XII', 'XI'] },
+  { title: 'Пищевая промышленность и торговля', count: 18, years: 18, spec: 'Ставки НДС на продовольственные товары, списание и уничтожение продукции, премии и бонусы покупателям.',
+    questions: ['Ставка 10 % и подтверждение кодов продукции', 'Списание просроченной продукции в расходы', 'Премии покупателю: цена или услуга', 'Налоговые последствия акций и дегустаций'], dirs: ['I', 'II', 'V'] },
+  { title: 'Розничная и оптовая торговля', count: 14, years: 15, spec: 'Маркетплейсы и ККТ, программы лояльности и кешбэк, возвраты, договоры в валюте и у. е.',
+    questions: ['Момент определения выручки при продаже через маркетплейс', 'Учёт баллов лояльности и кешбэка', 'Курсовые разницы по договорам в у. е.', 'Возвраты и корректировочные счета-фактуры'], dirs: ['I', 'XII', 'VII'] },
+  { title: 'Энергетика и добыча', count: 12, years: 14, spec: 'Налог на имущество по объектам инфраструктуры, льготы, расчёты в рамках соглашений о разделе продукции.',
+    questions: ['Движимое или недвижимое: квалификация объектов инфраструктуры', 'Льготы по налогу на имущество для энергообъектов', 'Учёт затрат на геологоразведку', 'Расчёты в рамках соглашения о разделе продукции'], dirs: ['I', 'XI', 'II'] }
+];
+
+const ARTICLES = [
+  { id: 0, title: 'Когда применяется ставка НДС 0 % в транспортной экспедиции', type: 'Разъяснение', theme: 'НДС', industry: 'Транспорт и логистика', date: '2026-07-14', checked: '2026-07-14', dirs: ['I', 'II'],
+    summary: 'Ставка 0 % применяется к транспортно-экспедиционным услугам при организации международной перевозки. Спор с инспекцией почти всегда идёт не о ставке, а о комплекте документов и о том, была ли перевозка международной по существу.',
+    body: ['Право на нулевую ставку возникает у экспедитора, организующего международную перевозку, независимо от того, привлекает ли он третьих лиц. Ключевой признак — пункт отправления или назначения находится за пределами территории Российской Федерации, и это следует из первичных документов, а не только из договора.', 'Инспекции чаще всего снимают ставку в двух ситуациях: перевозка разбита на этапы разными договорами, и в отдельном этапе оба пункта находятся в России; либо комплект документов не позволяет соотнести услугу с конкретной международной перевозкой.', 'Практика исходит из единства перевозки: если этап является частью международной перевозки и это подтверждено сквозными документами — товаросопроводительными документами, поручением экспедитору, транспортными накладными — ставка сохраняется.', 'Комплект документов формируется до отгрузки, а не к моменту камеральной проверки. Отсутствие одного документа из перечня статьи 165 НК РФ приводит к отказу даже при бесспорной по существу перевозке.'],
+    conclusion: 'Ставку 0 % защищает не формулировка договора, а сквозной комплект документов, из которого видна единая международная перевозка. Комплект собирается на этапе отгрузки.',
+    author: 'Партнёр практики косвенных налогов', reviewer: 'Руководитель налоговой практики' },
+  { id: 1, title: 'Как считать прибыль КИК за 2025 год и когда возникает налог', type: 'Аналитический материал', theme: 'КИК', industry: 'Частные клиенты', date: '2026-06-02', checked: '2026-06-02', dirs: ['IV', 'X'],
+    summary: 'Прибыль контролируемой иностранной компании определяется по её финансовой отчётности либо по правилам главы 25 НК РФ. Выбор способа влияет и на сумму налога, и на состав документов, которые придётся представить.',
+    body: ['Первый способ — по данным финансовой отчётности КИК, если она составлена по личному закону компании и в отношении неё проведён аудит, когда он обязателен либо проведён добровольно. Второй способ — по правилам главы 25 НК РФ, и он применяется, когда первое условие не выполняется.', 'Порог освобождения сохраняется: прибыль КИК не учитывается, если она не превышает установленного размера. Однако уведомление о КИК подаётся в любом случае — освобождение от налога не освобождает от отчётности.', 'Отдельного внимания требует налоговый регистр: он показывает переход от показателей отчётности КИК к налоговой базе. Без него инспекция ставит под сомнение и сумму, и сам способ расчёта.', 'Убыток КИК переносится на будущие периоды, но только при непрерывном представлении уведомлений. Пропуск уведомления за один год лишает права на перенос накопленного убытка.'],
+    conclusion: 'Способ расчёта прибыли выбирается до подготовки отчётности, а не после. Уведомление подаётся независимо от того, возникает ли налог.',
+    author: 'Партнёр практики международного налогообложения', reviewer: 'Руководитель налоговой практики' },
+  { id: 2, title: 'Обзор: изменения по контролируемым сделкам, вступающие в силу с 2026 года', type: 'Обзор изменений', theme: 'ТЦО и контролируемые сделки', industry: 'Все отрасли', date: '2026-05-20', checked: '2026-05-20', dirs: ['III'],
+    summary: 'Изменения затрагивают состав раскрываемых сведений в уведомлении, требования к документации и порядок симметричных корректировок. Готовиться нужно на этапе планирования сделок, а не при подаче уведомления.',
+    body: ['Расширен состав сведений, раскрываемых в уведомлении о контролируемых сделках: детализация по группам однородных сделок стала более дробной, и прежняя агрегация приводит к запросу пояснений.', 'Требования к документации по трансфертному ценообразованию уточнены в части обоснования выбора метода и источников информации для бенчмарка. Ссылка на закрытую базу данных без раскрытия критериев отбора сопоставимых компаний больше не считается достаточной.', 'Порядок симметричных корректировок формализован: право второй стороны на корректировку возникает после исполнения решения по проверке цен, и это требует согласованных действий внутри группы.'],
+    conclusion: 'Методику и источники бенчмарка фиксируйте до совершения сделок — переписать обоснование задним числом при действующих требованиях практически невозможно.',
+    author: 'Руководитель практики ТЦО', reviewer: 'Партнёр' },
+  { id: 3, title: 'Требование о представлении документов: что проверить до отправки', type: 'Разъяснение', theme: 'Налоговые проверки и споры', industry: 'Все отрасли', date: '2026-04-08', checked: '2026-04-08', dirs: ['II'],
+    summary: 'Ответ на требование определяет ход всей проверки. Проверяются основание требования, объём запроса, срок и состав передаваемых документов.',
+    body: ['Первое — основание. Требование в рамках камеральной проверки ограничено предметом этой проверки; требование вне проверки допустимо только по конкретной сделке. Запрос, выходящий за эти рамки, исполняется в части, соответствующей закону, с мотивированным пояснением по остальному.', 'Второе — объём. Повторное истребование ранее представленных документов не допускается: в ответе указывается реквизит письма, которым документы уже передавались.', 'Третье — содержание. Каждый документ проверяется на внутренние противоречия и соответствие данным отчётности. Передача комплекта без проверки формирует доказательственную базу против самой компании.', 'Четвёртое — срок. Ходатайство о продлении подаётся в первый рабочий день после получения требования; поданное позже, оно почти всегда отклоняется.'],
+    conclusion: 'Каждый документ, переданный инспекции, становится доказательством. Комплект формируется как позиция, а не как реакция на запрос.',
+    author: 'Руководитель практики налоговых споров', reviewer: 'Партнёр' },
+  { id: 4, title: 'Дробление бизнеса: признаки, на которые смотрит инспекция', type: 'Аналитический материал', theme: 'Дробление бизнеса', industry: 'Все отрасли', date: '2026-03-11', checked: '2026-03-11', dirs: ['II', 'V'],
+    summary: 'Само по себе наличие нескольких компаний в группе нарушением не является. Оспаривается искусственное разделение единого процесса ради сохранения специального режима.',
+    body: ['Инспекция исследует совокупность признаков: общие ресурсы, единое управление, отсутствие самостоятельной деловой цели у каждого участника, взаимозависимость и распределение выручки вблизи порогов специального режима.', 'Защита строится на деловой цели каждого юридического лица: собственный персонал, собственные договоры, самостоятельное принятие решений, раздельные ресурсы и объяснимая экономическая логика разделения.', 'Налоговая реконструкция при доказанном дроблении применяется: доначисление должно учитывать налоги, уплаченные участниками группы. Этот довод заявляется на стадии возражений, а не в суде.'],
+    conclusion: 'Структура группы должна быть объяснима без ссылки на налоговую экономию. Документальные следы деловой цели формируются одновременно с созданием компаний.',
+    author: 'Партнёр', reviewer: 'Руководитель налоговой практики' },
+  { id: 5, title: 'Вклад в имущество дочерней компании: налоговые последствия у сторон', type: 'Разъяснение', theme: 'Уставный капитал и вклады', industry: 'Все отрасли', date: '2026-02-17', checked: '2026-02-17', dirs: ['I', 'V'],
+    summary: 'Вклад в имущество без увеличения уставного капитала — рабочий инструмент финансирования, но последствия у передающей и принимающей стороны различаются.',
+    body: ['У принимающей стороны доход не возникает при соблюдении условий подпункта 11 пункта 1 статьи 251 НК РФ. Условие о доле участия и о назначении вклада проверяется на дату передачи.', 'У передающей стороны расход не признаётся. Стоимость вклада увеличивает стоимость доли и учитывается при её последующей реализации.', 'При передаче имущества, а не денег, возникает вопрос НДС: передача в качестве вклада в имущество не признаётся реализацией только при соблюдении установленных условий, иначе возникает объект налогообложения.'],
+    conclusion: 'До передачи фиксируйте назначение вклада в решении участника — формулировка решения определяет налоговую квалификацию.',
+    author: 'Руководитель налоговой практики', reviewer: 'Партнёр' },
+  { id: 6, title: 'Уступка прав по договору долевого участия: НДС у первоначального дольщика', type: 'Разъяснение', theme: 'Недвижимость', industry: 'Недвижимость и строительство', date: '2025-11-25', checked: '2025-11-25', dirs: ['I', 'VII'],
+    summary: 'При уступке прав по ДДУ налоговая база определяется как разница между ценой уступки и расходами на приобретение права. Спор возникает о составе таких расходов.',
+    body: ['Налоговая база по НДС считается с межценовой разницы. В расходы включается сумма, фактически уплаченная застройщику по договору, подтверждённая платёжными документами.', 'Дополнительные затраты — проценты по кредиту, комиссии, расходы на оформление — в расчёт межценовой разницы, по позиции ведомства, не включаются; попытка их учесть регулярно оспаривается.', 'Если уступка производится по цене ниже цены приобретения, база отсутствует, однако инспекция проверяет деловую цель такой уступки и взаимозависимость сторон.'],
+    conclusion: 'Расчёт межценовой разницы подтверждается платёжными документами застройщику. Экономическое обоснование цены уступки готовится заранее.',
+    author: 'Партнёр практики недвижимости', reviewer: 'Руководитель налоговой практики' },
+  { id: 7, title: 'ИТ-льгота при доработке стороннего программного обеспечения', type: 'Вопрос-ответ', theme: 'Льготы и МСП', industry: 'ИТ, медиа и реклама', date: '2025-09-30', checked: '2025-09-30', dirs: ['I', 'IV'],
+    summary: 'Доход от доработки чужого ПО учитывается в доле профильных доходов при выполнении условий об аккредитации и о характере работ. Формулировка предмета договора имеет решающее значение.',
+    body: ['В профильные доходы включаются поступления от разработки, адаптации и модификации программ для ЭВМ, в том числе созданных третьими лицами. Условие — работы соответствуют характеру, описанному в норме, а компания аккредитована.', 'Риск возникает, когда предмет договора сформулирован как «оказание услуг по технической поддержке» без указания на модификацию программного обеспечения: такой доход инспекция исключает из профильного.'],
+    conclusion: 'Предмет договора формулируется терминами нормы о льготе. Проверьте формулировки действующих договоров до окончания отчётного периода.',
+    author: 'Руководитель практики ИТ', reviewer: 'Партнёр' },
+  { id: 8, title: 'Займы между взаимозависимыми лицами: контролируемость и ставка', type: 'Разъяснение', theme: 'Займы', industry: 'Все отрасли', date: '2025-07-15', checked: '2025-07-15', dirs: ['III', 'IV'],
+    summary: 'Беспроцентный заём между российскими взаимозависимыми лицами по общему правилу не создаёт контролируемой сделки, но конструкция всё равно проверяется на деловую цель.',
+    body: ['Для трансграничных займов действует иной режим: применяется интервал предельных значений процентной ставки, и выход за интервал требует обоснования рыночного уровня.', 'Отдельный риск — переквалификация займа во вклад в капитал при длительном непогашении, отсутствии требования возврата и капитализации процентов.'],
+    conclusion: 'По трансграничным займам фиксируйте обоснование ставки в момент выдачи. По внутригрупповым — следите за фактическим исполнением условий возврата.',
+    author: 'Руководитель практики ТЦО', reviewer: 'Партнёр' },
+  { id: 9, title: 'Субсидиарная ответственность руководителя: что учитывается в защите', type: 'Аналитический материал', theme: 'Субсидиарная и уголовная ответственность', industry: 'Все отрасли', date: '2025-05-06', checked: '2025-05-06', dirs: ['VIII', 'VII'],
+    summary: 'Презумпции доведения до банкротства опровержимы. Защита строится на доказывании добросовестности решений и отсутствия причинной связи с несостоятельностью.',
+    body: ['Ключевые презумпции — совершение убыточных сделок, непередача документации, недостоверность сведений в реестре. Каждая опровергается фактами: экономическое обоснование сделки, акты передачи, переписка.', 'Существенное значение имеет момент объективного банкротства: действия, совершённые до его наступления, оцениваются в логике обычного предпринимательского риска.'],
+    conclusion: 'Документы, обосновывающие решения руководителя, собираются не в процедуре, а в момент принятия решений.',
+    author: 'Руководитель практики банкротства', reviewer: 'Партнёр' },
+  { id: 10, title: 'Оспаривание кадастровой стоимости: порядок и сроки перерасчёта налога', type: 'Разъяснение', theme: 'Имущественные налоги', industry: 'Недвижимость и строительство', date: '2025-02-18', checked: '2025-02-18', dirs: ['VII', 'XI'],
+    summary: 'Установление кадастровой стоимости в размере рыночной ведёт к перерасчёту налога. Экономический эффект определяется датой, с которой применяется новая стоимость.',
+    body: ['Заявление подаётся в бюджетное учреждение либо в суд, к нему прилагается отчёт об оценке. Качество отчёта — основной фактор результата.', 'Новая стоимость применяется с даты, определённой законом, поэтому подача заявления в конце года часто означает потерю эффекта за истёкший период.'],
+    conclusion: 'Оценка целесообразности делается до подачи: расходы на отчёт и сопровождение сопоставляются с экономией за периоды, к которым применится новая стоимость.',
+    author: 'Партнёр практики оценки', reviewer: 'Руководитель юридической практики' },
+  { id: 11, title: 'Валютные операции по зарубежному счёту резидента: что допустимо', type: 'Вопрос-ответ', theme: 'Валютное регулирование', industry: 'Частные клиенты', date: '2024-12-03', checked: '2024-12-03', dirs: ['IV', 'X'],
+    summary: 'Перечень допустимых операций по счетам в банках за пределами РФ ограничен, а за нарушение предусмотрена ответственность в процентах от суммы операции.',
+    body: ['Обязательными остаются уведомление об открытии счёта и отчёт о движении средств. Освобождение от отчёта действует при выполнении условий о юрисдикции и сумме операций.', 'Отдельно проверяются зачисления от нерезидентов: часть оснований прямо поименована как допустимая, остальные требуют анализа.'],
+    conclusion: 'До совершения операции проверяйте её основание по перечню: последствия нарушения считаются от суммы операции, а не от дохода.',
+    author: 'Партнёр практики международного налогообложения', reviewer: 'Руководитель налоговой практики' }
+];
+
+const CASES = [
+  { id: 0, industry: 'Транспорт и логистика', dir: 'II', title: 'Снята претензия по ставке НДС 0 % за три года экспедирования', task: 'Группе компаний в сфере транспортной логистики отказали в применении нулевой ставки по этапам международных перевозок, оформленным отдельными договорами.', work: ['Восстановлена связь этапов перевозки по сквозным товаросопроводительным документам', 'Подготовлены возражения на акт с расчётом по каждому спорному этапу', 'Проведено рассмотрение материалов проверки с участием представителя', 'Сформирована позиция для суда на случай отказа в удовлетворении возражений'], outcome: 'Претензия снята на стадии рассмотрения возражений, спор в суд не перешёл.', term: '4 месяца', format: 'Возражения, представительство' },
+  { id: 1, industry: 'Фармацевтика и медтехника', dir: 'I', title: 'Подтверждена льготная ставка НДС по медицинским изделиям', task: 'Российское подразделение международной фармацевтической группы получило запрос о правомерности применения пониженной ставки по части номенклатуры.', work: ['Сверены коды продукции с перечнями и регистрационными удостоверениями', 'Подготовлено письменное заключение по каждой товарной позиции', 'Составлен ответ на требование с приложением подтверждающих документов'], outcome: 'Ставка подтверждена по всей номенклатуре, доначислений не последовало.', term: '6 недель', format: 'Заключение, ответ на требование' },
+  { id: 2, industry: 'Финансы и управление активами', dir: 'III', title: 'Документация по ТЦО для группы: седьмой год непрерывного сопровождения', task: 'Управляющая компания ежегодно совершает внутригрупповые сделки, попадающие под контроль, при меняющемся составе контрагентов.', work: ['Ежегодная актуализация периметра контролируемых сделок', 'Бенчмарк-исследование и расчёт интервала рентабельности по группам сделок', 'Подготовка документации и приложений с расчётами', 'Ответы на запросы инспекции по применённой методике'], outcome: 'Методика принимается инспекцией седьмой год подряд, корректировок цен не производилось.', term: 'Ежегодный цикл', format: 'Документация, уведомление' },
+  { id: 3, industry: 'Недвижимость и девелопмент', dir: 'IX', title: 'Продажа девелоперского актива: структурирование и сопровождение сделки', task: 'Собственник продавал объект вместе с проектной компанией; покупатель требовал полный юридический due diligence и гарантий по налоговым рискам.', work: ['Смоделированы два варианта: продажа объекта и продажа доли, с расчётом налоговой нагрузки', 'Проведён юридический due diligence проектной компании', 'Сформирован Data Room и регламент доступа', 'Подготовлен договор с заверениями, гарантиями и эскроу-механизмом расчётов'], outcome: 'Сделка закрыта по варианту с продажей доли, переход прав зарегистрирован в согласованный срок.', term: '5 месяцев', format: 'Сопровождение сделки под ключ' },
+  { id: 4, industry: 'Частные клиенты', dir: 'X', title: 'Приведение зарубежных активов собственника в соответствие требованиям', task: 'У собственника накопились доли в иностранных компаниях и счета, часть уведомлений не подавалась несколько лет.', work: ['Составлена карта владения и перечень отчётных обязанностей по каждому активу', 'Подготовлены уведомления об участии и о КИК, отчёты о движении средств', 'Рассчитана прибыль КИК и подготовлены декларации за прошедшие периоды', 'Сопровождены запросы инспекции по представленным документам'], outcome: 'Отчётность приведена в порядок, требования инспекции закрыты без штрафных претензий по существу расчётов.', term: '3 месяца', format: 'Декларирование, представительство' },
+  { id: 5, industry: 'Производство', dir: 'VIII', title: 'Защита руководителя от субсидиарной ответственности', task: 'К бывшему руководителю производственной компании предъявлено требование о привлечении к субсидиарной ответственности по обязательствам должника.', work: ['Восстановлена хронология решений и определён момент объективного банкротства', 'Собраны документы, обосновывающие экономическую цель оспариваемых сделок', 'Подтверждена передача документации конкурсному управляющему', 'Позиция заявлена в обособленном споре и поддержана в апелляции'], outcome: 'В привлечении к субсидиарной ответственности отказано, определение устояло в апелляции.', term: '8 месяцев', format: 'Обособленный спор' }
+];
+
+const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+const NOW = new Date('2026-08-02');
+
+function fmt(iso) {
+  const d = new Date(iso);
+  return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+}
+function isStale(iso) {
+  return (NOW - new Date(iso)) / 86400000 > 365;
+}
+
+const MARK_BASE = ['#17352C', '#B0913F', null, '#B0913F', '#17352C', null, '#17352C', '#B0913F', '#17352C'];
+
+function markShift(cells, m) {
+  const out = cells.slice();
+  for (let k = 0; k < 3; k++) {
+    const from = (k - m.dir + 3) % 3;
+    if (m.type === 'row') out[m.index * 3 + k] = cells[m.index * 3 + from];
+    else out[k * 3 + m.index] = cells[from * 3 + m.index];
+  }
+  return out;
+}
+
+class Component extends DCLogic {
+  state = { page: 'home', dir: 'II', ind: 0, art: 0, kase: 0, theme: 'Все', type: 'Все', industry: 'Все', q: '', subEmail: '', subscribed: false, mark: MARK_BASE, spin: null };
+
+  componentDidMount() {
+    this._timers = [];
+    this._timers.push(setTimeout(() => this.scramble(), 1100));
+  }
+  componentWillUnmount() { (this._timers || []).forEach(clearTimeout); }
+  _wait(ms) { return new Promise(r => this._timers.push(setTimeout(r, ms))); }
+
+  async scramble() {
+    if (this._busy) return;
+    this._busy = true;
+    const moves = [];
+    for (let i = 0; i < 5; i++) {
+      moves.push({
+        type: Math.random() < 0.5 ? 'row' : 'col',
+        index: Math.floor(Math.random() * 3),
+        dir: Math.random() < 0.5 ? 1 : -1
+      });
+    }
+    const seq = moves.concat(moves.slice().reverse().map(m => ({ type: m.type, index: m.index, dir: -m.dir })));
+    for (let i = 0; i < seq.length; i++) {
+      await this._turn(seq[i]);
+      await this._wait(i === moves.length - 1 ? 320 : 55);
+    }
+    this.setState({ mark: MARK_BASE, spin: null });
+    this._busy = false;
+  }
+
+  async _turn(m) {
+    this.setState({ spin: { type: m.type, index: m.index, angle: 90, anim: true } });
+    await this._wait(165);
+    this.setState(s => ({ mark: markShift(s.mark, m), spin: { type: m.type, index: m.index, angle: -90, anim: false } }));
+    await this._wait(30);
+    this.setState(s => ({ spin: Object.assign({}, s.spin, { angle: 0, anim: true }) }));
+    await this._wait(185);
+    this.setState({ spin: null });
+  }
+
+  go(page, extra) {
+    this.setState(Object.assign({ page }, extra || {}));
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+
+  dirBy(roman) { return DIRECTIONS.find(d => d.roman === roman) || DIRECTIONS[0]; }
+
+  renderVals() {
+    const st = this.state;
+    const go = (p, e) => () => this.go(p, e);
+    const openDir = roman => ({ open: go('direction', { dir: roman }) });
+
+    const directions = DIRECTIONS.map(d => Object.assign({}, d, {
+      open: go('direction', { dir: d.roman }),
+      count: d.services.length,
+      servicesLine: d.services.slice(0, 3).map(s => s.t).join(' · ')
+    }));
+
+    const industries = INDUSTRIES.map((i, n) => Object.assign({}, i, { open: go('industry', { ind: n }) }));
+
+    const articles = ARTICLES.map(a => Object.assign({}, a, {
+      open: go('article', { art: a.id }),
+      dateLabel: fmt(a.date),
+      checkedLabel: fmt(a.checked),
+      stale: isStale(a.checked)
+    }));
+
+    const cases = CASES.map(c => Object.assign({}, c, {
+      open: go('case', { kase: c.id }),
+      dirTitle: this.dirBy(c.dir).title
+    }));
+
+    const dir = directions.find(d => d.roman === st.dir) || directions[0];
+    const ind = INDUSTRIES[st.ind];
+    const indDirs = ind.dirs.map(r => Object.assign({}, this.dirBy(r), { open: go('direction', { dir: r }) }));
+    const art = articles[st.art];
+    const kase = cases[st.kase];
+
+    const themes = ['Все'].concat(Array.from(new Set(ARTICLES.map(a => a.theme))));
+    const types = ['Все'].concat(Array.from(new Set(ARTICLES.map(a => a.type))));
+    const inds = ['Все'].concat(Array.from(new Set(ARTICLES.map(a => a.industry))));
+    const chip = (label, active, pick) => ({
+      label, pick,
+      bg: active ? '#17352C' : '#FFFFFF',
+      fg: active ? '#F3F1EA' : '#4F544E',
+      border: active ? '#17352C' : '#DCD9CE'
+    });
+
+    const norm = s => s.toLowerCase().replace(/ё/g, 'е');
+    const stem = w => norm(w).replace(/(ами|ями|ого|ему|ыми|ой|ей|ах|ях|ов|ев|ам|ям|ом|ем|ые|ие|ая|яя|ую|ю|и|ы|а|е|у|о|й|ь)$/,'');
+    const terms = st.q.trim() ? st.q.trim().split(/\s+/).map(stem).filter(t => t.length > 1) : [];
+    const kbList = articles.filter(a => {
+      if (st.theme !== 'Все' && a.theme !== st.theme) return false;
+      if (st.type !== 'Все' && a.type !== st.type) return false;
+      if (st.industry !== 'Все' && a.industry !== st.industry) return false;
+      if (!terms.length) return true;
+      const hay = norm(a.title + ' ' + a.summary + ' ' + a.theme + ' ' + a.body.join(' '));
+      return terms.every(t => hay.indexOf(t) !== -1);
+    });
+
+    const plural = n => n % 10 === 1 && n % 100 !== 11 ? 'материал' : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'материала' : 'материалов');
+
+    const spin = st.spin;
+    const markCells = st.mark.map((bg, i) => {
+      const r = Math.floor(i / 3), c = i % 3;
+      const on = spin && (spin.type === 'row' ? spin.index === r : spin.index === c);
+      return {
+        bg: bg || 'transparent',
+        tr: on ? (spin.type === 'row' ? 'rotateX(' + spin.angle + 'deg)' : 'rotateY(' + spin.angle + 'deg)') : 'none',
+        tn: on && spin.anim ? 'transform 165ms cubic-bezier(.45,.05,.35,1)' : 'none'
+      };
+    });
+
+    return {
+      markCells,
+      replayMark: () => this.scramble(),
+      phone: this.props.phone ?? '+7 495 103-10-51',
+      fax: '+7 495 103-10-52',
+      email: 'info@yans-consult.ru',
+      address: '127083, Москва, ул. 8 Марта, д. 1, стр. 12, БЦ «ТРИО», корп. 3, 4 этаж',
+
+      isHome: st.page === 'home', isServices: st.page === 'services', isDirection: st.page === 'direction',
+      isIndustries: st.page === 'industries', isIndustry: st.page === 'industry', isKb: st.page === 'kb',
+      isArticle: st.page === 'article', isCases: st.page === 'cases', isCase: st.page === 'case',
+      isAbout: st.page === 'about', isContacts: st.page === 'contacts', is404: st.page === '404',
+
+      goHome: go('home'), goServices: go('services'), goIndustries: go('industries'), goKb: go('kb'),
+      goCases: go('cases'), goContacts: go('contacts'), go404: go('404'),
+
+      nav: [
+        { label: 'Услуги', go: go('services') },
+        { label: 'Отрасли', go: go('industries') },
+        { label: 'База знаний', go: go('kb') },
+        { label: 'Кейсы', go: go('cases') },
+        { label: 'О компании', go: go('about') },
+        { label: 'Контакты', go: go('contacts') }
+      ],
+
+      facts: [
+        { n: '25 лет', t: 'непрерывной практики с 2001 года' },
+        { n: '704', t: 'письменные работы по 39 темам' },
+        { n: '350', t: 'клиентов на сопровождении и разовых работах' },
+        { n: '90 %', t: 'выигранных судебных споров' },
+        { n: '18', t: 'юрисдикций затронуто в работах' }
+      ],
+
+      entries: [
+        { q: 'Пришло требование из инспекции', a: 'Проверим основание и объём запроса, соберём комплект как позицию, а не как реакцию.', dirTitle: 'Налоговые проверки и споры', open: go('direction', { dir: 'II' }) },
+        { q: 'Планируется продажа доли или бизнеса', a: 'Смоделируем варианты сделки, проведём юридическую экспертизу, подготовим договор.', dirTitle: 'Сделки M&A', open: go('direction', { dir: 'IX' }) },
+        { q: 'Нужно подтвердить ставку НДС 0 %', a: 'Соберём комплект документов до отгрузки и защитим ставку при камеральной проверке.', dirTitle: 'Налоговое консультирование', open: go('direction', { dir: 'I' }) },
+        { q: 'Есть КИК и зарубежные счета', a: 'Уведомления, расчёт прибыли, декларации и проверка операций на валютные ограничения.', dirTitle: 'Международное налогообложение и КИК', open: go('direction', { dir: 'IV' }) },
+        { q: 'Сделки с взаимозависимыми лицами', a: 'Определим периметр контролируемых сделок, подготовим уведомление и документацию.', dirTitle: 'Трансфертное ценообразование', open: go('direction', { dir: 'III' }) },
+        { q: 'Контрагент не платит', a: 'Оценим перспективы, доведём дело до решения и проконтролируем исполнение.', dirTitle: 'Судебная защита и взыскание', open: go('direction', { dir: 'VII' }) }
+      ],
+
+      directions,
+      groups: [
+        { n: 'A', title: 'Налоговая практика', note: 'Ядро компании: консультирование, защита при проверках и спорах, ценообразование в группе, трансграничные операции и КИК.', dirs: directions.filter(d => ['I', 'II', 'III', 'IV'].indexOf(d.roman) !== -1) },
+        { n: 'B', title: 'Юридическая практика', note: 'Структура бизнеса и сделки: корпоративное право, регистрационные действия, суды и взыскание, банкротство, M&A, частные клиенты.', dirs: directions.filter(d => ['V', 'VI', 'VII', 'VIII', 'IX', 'X'].indexOf(d.roman) !== -1) },
+        { n: 'C', title: 'Оценка и управленческий консалтинг', note: 'Стоимость активов и бизнеса, управленческая отчётность, организационная схема и автоматизация учёта на 1С:ERP.', dirs: directions.filter(d => ['XI', 'XII'].indexOf(d.roman) !== -1) }
+      ],
+      groupOf: (() => {
+        const map = { I: 'Налоговая практика', II: 'Налоговая практика', III: 'Налоговая практика', IV: 'Налоговая практика', V: 'Юридическая практика', VI: 'Юридическая практика', VII: 'Юридическая практика', VIII: 'Юридическая практика', IX: 'Юридическая практика', X: 'Юридическая практика', XI: 'Оценка и управленческий консалтинг', XII: 'Оценка и управленческий консалтинг' };
+        return map[st.dir];
+      })(),
+      footerDirs: directions.slice(0, 6),
+      industries,
+      cases,
+      latest: articles.slice(0, 3),
+
+      dir,
+      stages: [
+        { n: '1', t: 'Обращение', d: 'Форма, почта или звонок' },
+        { n: '2', t: 'Уточнение вопроса', d: 'Разговор с партнёром, запрос документов' },
+        { n: '3', t: 'Расчёт стоимости', d: 'Калькуляция и срок, письменное подтверждение' },
+        { n: '4', t: 'Работа', d: 'Анализ нормы, позиции ведомств и практики' },
+        { n: '5', t: 'Документ', d: 'Письменная позиция на фирменном бланке' },
+        { n: '6', t: 'Сопровождение', d: 'Ответы на уточнения и поддержка при применении' }
+      ],
+      dirCases: cases.filter(c => c.dir === st.dir).concat(cases).slice(0, 2),
+      dirArticles: articles.filter(a => a.dirs.indexOf(st.dir) !== -1).concat(articles).slice(0, 4),
+
+      ind: Object.assign({}, ind, { dirs: indDirs }),
+
+      kbQuery: st.q,
+      onQuery: e => this.setState({ q: e.target.value }),
+      kbThemes: themes.map(t => chip(t === 'Все' ? 'Все разделы' : t, st.theme === t, () => this.setState({ theme: t }))),
+      kbTypes: types.map(t => chip(t === 'Все' ? 'Все типы' : t, st.type === t, () => this.setState({ type: t }))),
+      kbInds: inds.map(t => chip(t === 'Все' ? 'Все отрасли' : t, st.industry === t, () => this.setState({ industry: t }))),
+      resetFilters: () => this.setState({ theme: 'Все', type: 'Все', industry: 'Все', q: '' }),
+      kbList,
+      kbEmpty: kbList.length === 0,
+      kbCountLabel: 'Найдено ' + kbList.length + ' ' + plural(kbList.length) + ' из ' + ARTICLES.length,
+
+      art,
+      relatedArticles: articles.filter(a => a.id !== st.art && a.theme !== art.theme).slice(0, 3),
+      subEmail: st.subEmail,
+      onSubEmail: e => this.setState({ subEmail: e.target.value }),
+      subscribe: () => this.setState({ subscribed: true }),
+      subLabel: st.subscribed ? 'Проверьте почту — отправили подтверждение' : 'Подписаться',
+
+      kase,
+
+      team: [
+        { name: 'Кротов Ян Иосифович', role: 'Управляющий партнёр', about: 'Магистр экономики МГУ им. М. В. Ломоносова, экономический факультет. Руководит компанией с момента её создания в 2000 году. Квалифицированный аудитор, практикующий консультант с 1996 года. Налоговое планирование, оценка рисков, сопровождение сделок слияния и поглощения. Читает авторские курсы «Налоговая система РФ» и «Сложные вопросы налогообложения» на экономическом факультете МГУ.' },
+        { name: 'Нечитайло Ирина Петровна', role: 'Начальник отдела налогового консультирования', about: 'Новосибирский электротехнический институт. Квалифицированный аудитор, квалифицированный налоговый консультант с 2002 года, квалификационный аттестат профессионального бухгалтера-эксперта. Более 20 лет в экономике и финансах, из них более 15 лет — бухгалтерский учёт и налоговый консалтинг.' },
+        { name: 'Бельговская Елена Александровна', role: 'Налоговый консультант', about: 'Квалификационный аттестат налогового консультанта, выданный Палатой налоговых консультантов; аттестат продлевается в установленном порядке. Консультирование по налогообложению и бухгалтерскому учёту, подготовка письменных консультаций и заключений.' }
+      ],
+      principles: [
+        'Любая позиция оформляется письменно: норма, разъяснения Минфина и ФНС, арбитражная практика, вывод.',
+        'Стоимость считается по калькуляции и подтверждается до начала работы.',
+        'Клиенты не называются: кейсы публикуются только обезличенно.',
+        'Материал базы знаний с истекшим сроком проверки помечается прямо в карточке.'
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

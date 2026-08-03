@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap&subset=cyrillic,latin" rel="stylesheet">
+<script src="./doc-page.js"></script>
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  body { margin: 0; }
+  * { text-wrap: pretty; box-sizing: border-box; }
+  a { color: #17352C; text-decoration: none; border-bottom: 1px solid #B0913F; }
+  a:hover { color: #0F241E; }
+</style>
+</helmet>
+
+<doc-page size="a4">
+  <sc-for list="{{ pages }}" as="p" hint-placeholder-count="24">
+    <section class="page" style="font-family:'IBM Plex Sans',sans-serif;color:#17352C;background:#FFFFFF;display:flex;flex-direction:column">
+
+      <sc-if value="{{ p.isCover }}" hint-placeholder-val="{{ true }}">
+        <div style="background:#17352C;color:#F3F1EA;padding:16mm 18mm 14mm;display:flex;justify-content:space-between;align-items:flex-start;gap:12mm">
+          <div style="display:flex;align-items:flex-start;gap:5mm">
+            <div style="display:grid;grid-template-columns:repeat(3,3.4mm);grid-template-rows:repeat(3,3.4mm);gap:0.8mm">
+              <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div></div>
+              <div style="background:#B0913F"></div><div style="background:#F3F1EA"></div><div></div>
+              <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div style="background:#F3F1EA"></div>
+            </div>
+            <div>
+              <div style="font-size:15pt;line-height:1"><span style="font-weight:700">ЯНС</span> <span style="font-weight:300;letter-spacing:0.08em">КОНСАЛТ</span></div>
+              <div style="height:0.7mm;background:#B0913F;margin:2mm 0 1.4mm;width:44mm"></div>
+              <div style="font-size:6pt;letter-spacing:0.13em;text-transform:uppercase;color:#9DA29A">юридические и финансовые консультации</div>
+            </div>
+          </div>
+          <div style="text-align:right;font-size:8pt;line-height:1.6;color:#9DA29A">{{ p.group }}<br>Направление {{ p.roman }} · каталог услуг 2026</div>
+        </div>
+
+        <div style="padding:14mm 18mm 0;flex:1;display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:1fr 38mm;gap:12mm;align-items:start">
+            <div>
+              <div style="font-family:'IBM Plex Serif',serif;font-size:27pt;line-height:1.1;letter-spacing:-0.01em">{{ p.title }}</div>
+              <div style="width:22mm;height:1.4mm;background:#B0913F;margin:6mm 0 5mm"></div>
+              <div style="font-size:11.5pt;line-height:1.55;color:#4F544E">{{ p.lead }}</div>
+            </div>
+            <dc-import name="Пиктограмма направления" roman="{{ p.roman }}" hint-size="38mm,38mm"></dc-import>
+          </div>
+
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin:11mm 0 5mm">Когда это нужно</div>
+          <div style="display:flex;flex-direction:column;gap:3.4mm">
+            <sc-for list="{{ p.when }}" as="w" hint-placeholder-count="5">
+              <div style="display:flex;gap:4mm;align-items:flex-start"><div style="width:0.9mm;height:5mm;background:#B0913F;flex:none;margin-top:1mm"></div><div style="font-size:11pt;line-height:1.45">{{ w }}</div></div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:auto;padding-bottom:12mm">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8mm;border-top:0.3mm solid #DCD9CE;padding-top:6mm">
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:2mm">Практика</div>
+                <div style="font-size:9.5pt;line-height:1.5;color:#4F544E">{{ p.short }}</div>
+              </div>
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:2mm">Услуг в направлении</div>
+                <div style="font-family:'IBM Plex Serif',serif;font-size:20pt;line-height:1">{{ p.count }}</div>
+              </div>
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:2mm">Контакты</div>
+                <div style="font-size:9.5pt;line-height:1.55;color:#4F544E">{{ phone }}<br>{{ email }}<br>{{ site }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;height:8mm"><div style="flex:1;background:#B0913F"></div><div style="flex:3;background:#DCD9CE"></div></div>
+      </sc-if>
+
+      <sc-if value="{{ p.isDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:12mm 18mm 0;display:flex;justify-content:space-between;align-items:center;border-bottom:0.3mm solid #DCD9CE;padding-bottom:4mm;gap:8mm">
+          <div style="display:flex;align-items:center;gap:6mm">
+            <dc-import name="Пиктограмма направления" roman="{{ p.roman }}" hint-size="12mm,12mm" style="width:12mm;height:12mm;flex:none"></dc-import>
+            <div style="font-family:'IBM Plex Serif',serif;font-size:15pt;line-height:1.2">{{ p.title }}</div>
+          </div>
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ p.group }} · {{ p.roman }}</div>
+        </div>
+
+        <div style="padding:7mm 18mm 0;flex:1;display:flex;flex-direction:column">
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:3mm">Что входит в работу</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2mm 8mm">
+            <sc-for list="{{ p.included }}" as="i" hint-placeholder-count="6">
+              <div style="font-size:9pt;line-height:1.35;color:#4F544E;border-bottom:0.2mm solid #EFEDE4;padding-bottom:1.8mm">{{ i }}</div>
+            </sc-for>
+          </div>
+
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin:6mm 0 3mm">Услуги направления</div>
+          <div style="display:flex;flex-direction:column;gap:1.8mm">
+            <sc-for list="{{ p.services }}" as="s" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:60mm 1fr 1fr;gap:5mm;padding-bottom:1.7mm;border-bottom:0.2mm solid #EFEDE4">
+                <div style="font-size:9pt;line-height:1.25;font-weight:600">{{ s.t }}</div>
+                <div style="font-size:8pt;line-height:1.3;color:#85897F">{{ s.q }}</div>
+                <div style="font-size:8pt;line-height:1.3;color:#4F544E">{{ s.r }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin:6mm 0 3mm">Как проходит работа</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3mm">
+            <sc-for list="{{ stages }}" as="s" hint-placeholder-count="6">
+              <div style="border-top:0.8mm solid #DCD9CE;padding-top:2mm">
+                <div style="font-family:'IBM Plex Serif',serif;font-size:11pt;color:#B0913F;line-height:1">{{ s.n }}</div>
+                <div style="font-size:8pt;font-weight:600;line-height:1.25;margin:1.2mm 0 0.8mm">{{ s.t }}</div>
+                <div style="font-size:7pt;line-height:1.3;color:#85897F">{{ s.d }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:auto;padding-bottom:10mm">
+            <div style="border-left:1mm solid #B0913F;background:#F3F1EA;padding:4mm 5mm;display:grid;grid-template-columns:1.3fr 1fr 1.3fr;gap:6mm;margin:6mm 0 4mm">
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:1.8mm">Результат</div>
+                <div style="font-size:9pt;line-height:1.45;color:#4F544E">{{ p.result }}</div>
+              </div>
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:1.8mm">Срок</div>
+                <div style="font-size:9pt;line-height:1.45;color:#4F544E">{{ p.term }}</div>
+              </div>
+              <div>
+                <div style="font-size:7.5pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:1.8mm">Разграничение с аудитом</div>
+                <div style="font-size:9pt;line-height:1.45;color:#4F544E">{{ p.border }}</div>
+              </div>
+            </div>
+            <div style="background:#17352C;color:#C9CCC4;padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center;gap:8mm">
+              <div style="display:flex;align-items:flex-start;gap:4mm">
+                <div style="display:grid;grid-template-columns:repeat(3,2.6mm);grid-template-rows:repeat(3,2.6mm);gap:0.6mm">
+                  <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div></div>
+                  <div style="background:#B0913F"></div><div style="background:#F3F1EA"></div><div></div>
+                  <div style="background:#F3F1EA"></div><div style="background:#B0913F"></div><div style="background:#F3F1EA"></div>
+                </div>
+                <div>
+                  <div style="font-size:11pt;line-height:1;color:#F3F1EA"><span style="font-weight:700">ЯНС</span> <span style="font-weight:300;letter-spacing:0.08em">КОНСАЛТ</span></div>
+                  <div style="font-size:8pt;line-height:1.5;color:#9DA29A;margin-top:1.6mm">ООО «Я.Н.С. – Консалт» · {{ address }}</div>
+                </div>
+              </div>
+              <div style="text-align:right;font-size:9pt;line-height:1.6;color:#F3F1EA">{{ phone }}<br>{{ email }} · {{ site }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </section>
+  </sc-for>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+7 495 103-10-51&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { dirs: [] };
+
+  componentDidMount() {
+    import('./yans-directions.js').then(m => this.setState({ dirs: m.DIRECTIONS }));
+  }
+
+  renderVals() {
+    const GROUP = { I: 'Налоговая практика', II: 'Налоговая практика', III: 'Налоговая практика', IV: 'Налоговая практика', V: 'Юридическая практика', VI: 'Юридическая практика', VII: 'Юридическая практика', VIII: 'Юридическая практика', IX: 'Юридическая практика', X: 'Юридическая практика', XI: 'Оценка и управленческий консалтинг', XII: 'Оценка и управленческий консалтинг' };
+    const pages = [];
+    (this.state.dirs || []).forEach(d => {
+      const base = {
+        group: GROUP[d.roman],
+        roman: d.roman, title: d.title, lead: d.lead, short: d.short, when: d.when,
+        included: d.included, services: d.services, result: d.result, term: d.term,
+        border: d.border, count: d.services.length
+      };
+      pages.push(Object.assign({ isCover: true, isDetail: false }, base));
+      pages.push(Object.assign({ isCover: false, isDetail: true }, base));
+    });
+
+    return {
+      pages,
+      phone: this.props.phone ?? '+7 495 103-10-51',
+      email: 'info@yans-consult.ru',
+      site: 'yans-consult.ru',
+      address: '127083, Москва, ул. 8 Марта, д. 1, стр. 12, БЦ «ТРИО», корп. 3',
+      stages: [
+        { n: '1', t: 'Обращение', d: 'Форма, почта или звонок' },
+        { n: '2', t: 'Уточнение', d: 'Разговор с партнёром, документы' },
+        { n: '3', t: 'Стоимость', d: 'Калькуляция и срок письменно' },
+        { n: '4', t: 'Работа', d: 'Норма, позиция ведомств, практика' },
+        { n: '5', t: 'Документ', d: 'Позиция на фирменном бланке' },
+        { n: '6', t: 'Сопровождение', d: 'Ответы на уточнения' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:8%;width:100%;aspect-ratio:1/1">
+    <sc-for list="{{ cells }}" as="c" hint-placeholder-count="9">
+      <div style="background:{{ c.bg }};border:{{ c.border }}"></div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:180,&quot;height&quot;:180},&quot;roman&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;I&quot;,&quot;II&quot;,&quot;III&quot;,&quot;IV&quot;,&quot;V&quot;,&quot;VI&quot;,&quot;VII&quot;,&quot;VIII&quot;,&quot;IX&quot;,&quot;X&quot;,&quot;XI&quot;,&quot;XII&quot;],&quot;default&quot;:&quot;I&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;inverse&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;main&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#17352C&quot;,&quot;#0F241E&quot;,&quot;#2C544A&quot;],&quot;default&quot;:&quot;#17352C&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;gold&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#B0913F&quot;,&quot;#8E7328&quot;],&quot;default&quot;:&quot;#B0913F&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const PATTERNS = {
+  I:    ['.','m','.', 'm','g','m', '.','m','.'],
+  II:   ['m','.','m', '.','m','.', 'm','g','m'],
+  III:  ['m','.','m', 'm','g','m', 'm','.','m'],
+  IV:   ['m','.','m', '.','g','.', 'm','.','m'],
+  V:    ['m','m','m', '.','g','.', 'm','.','m'],
+  VI:   ['m','m','g', 'm','.','.', 'm','.','.'],
+  VII:  ['.','m','.', 'm','m','m', '.','g','.'],
+  VIII: ['m','m','.', '.','m','.', '.','.','g'],
+  IX:   ['m','m','.', '.','g','.', '.','m','m'],
+  X:    ['.','.','m', '.','g','m', '.','.','m'],
+  XI:   ['.','.','m', '.','m','m', 'g','m','m'],
+  XII:  ['m','m','m', 'm','g','m', 'm','m','.']
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const inverse = this.props.inverse ?? false;
+    const main = inverse ? (this.props.paper ?? '#F3F1EA') : (this.props.main ?? '#17352C');
+    const gold = this.props.gold ?? '#B0913F';
+    const line = inverse ? 'rgba(243,241,234,0.22)' : 'rgba(23,53,44,0.14)';
+    const pattern = PATTERNS[this.props.roman] || PATTERNS.I;
+    return {
+      cells: pattern.map(v => ({
+        bg: v === 'm' ? main : (v === 'g' ? gold : 'transparent'),
+        border: v === '.' ? '1px solid ' + line : '0'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
