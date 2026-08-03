@@ -511,7 +511,7 @@
         <div style="font-size:16px;line-height:1.65">{{ art.conclusion }}</div>
       </div>
       <div style="display:flex;gap:14px;margin-top:32px;align-items:center">
-        <div style="border:1px solid #DCD9CE;background:#FFFFFF;padding:13px 24px;font-size:14px;font-weight:500;cursor:pointer" style-hover="border-color:#B0913F">Скачать PDF на фирменном бланке</div>
+        <div onClick="{{ exportPdf }}" style="border:1px solid #DCD9CE;background:#FFFFFF;padding:13px 24px;font-size:14px;font-weight:500;cursor:pointer" style-hover="border-color:#B0913F">Скачать PDF на фирменном бланке</div>
         <div style="font-size:13px;color:#85897F">Нормативная база на {{ art.checkedLabel }}</div>
       </div>
     </article>
@@ -1057,6 +1057,76 @@ class Component extends DCLogic {
 
   dirBy(roman) { return DIRECTIONS.find(d => d.roman === roman) || DIRECTIONS[0]; }
 
+  exportPdf(a) {
+    const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const cells = MARK_BASE.map(c => '<i style="background:' + (c || 'transparent') + '"></i>').join('');
+    const paras = a.body.map(p => '<p>' + esc(p) + '</p>').join('');
+    const doc = [
+      '<!doctype html><html lang="ru"><head><meta charset="utf-8">',
+      '<title>' + esc('ЯНС Консалт — ' + a.title) + '</title>',
+      '<link rel="preconnect" href="https://fonts.googleapis.com">',
+      '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+      '<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">',
+      '<style>',
+      '@page { size: A4; margin: 20mm 18mm 24mm; }',
+      '* { margin: 0; padding: 0; box-sizing: border-box; }',
+      'body { font-family: "IBM Plex Sans", sans-serif; color: #1A2620; -webkit-print-color-adjust: exact; print-color-adjust: exact; }',
+      '.head { display: flex; align-items: center; gap: 16px; padding-bottom: 18px; border-bottom: 2px solid #17352C; }',
+      '.mark { display: grid; grid-template-columns: repeat(3, 9px); grid-template-rows: repeat(3, 9px); gap: 2.5px; }',
+      '.mark i { display: block; }',
+      '.brand { font-size: 21px; font-weight: 600; letter-spacing: 0.06em; color: #17352C; }',
+      '.brand span { font-weight: 400; }',
+      '.brandsub { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #85897F; margin-top: 4px; }',
+      '.doctag { margin-left: auto; text-align: right; font-size: 10.5px; color: #85897F; line-height: 1.6; }',
+      '.meta { margin-top: 26px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #B0913F; }',
+      'h1 { font-family: "IBM Plex Serif", serif; font-size: 24px; font-weight: 600; line-height: 1.3; color: #17352C; margin-top: 10px; }',
+      '.lead { margin-top: 16px; font-size: 13.5px; line-height: 1.65; font-weight: 500; color: #17352C; }',
+      '.body { margin-top: 14px; }',
+      '.body p { font-size: 12.5px; line-height: 1.7; margin-top: 10px; text-align: justify; }',
+      '.concl { margin-top: 22px; border-left: 3px solid #B0913F; background: #F7F5EE; padding: 14px 18px; page-break-inside: avoid; }',
+      '.concl span { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #85897F; margin-bottom: 6px; }',
+      '.concl p { font-size: 12.5px; line-height: 1.65; }',
+      '.sig { margin-top: 24px; padding-top: 14px; border-top: 1px solid #DCD9CE; font-size: 11px; line-height: 1.8; color: #1A2620; page-break-inside: avoid; }',
+      '.sig b { font-weight: 600; }',
+      '.dates { margin-top: 6px; font-size: 10.5px; color: #85897F; }',
+      '.disc { margin-top: 14px; font-size: 9.5px; line-height: 1.6; color: #85897F; }',
+      '.foot { position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #DCD9CE; padding-top: 6px; font-size: 9px; color: #85897F; text-align: center; }',
+      '</style></head><body>',
+      '<div class="head">',
+      '<div class="mark">' + cells + '</div>',
+      '<div><div class="brand">ЯНС <span>КОНСАЛТ</span></div><div class="brandsub">юридические и финансовые консультации</div></div>',
+      '<div class="doctag">База знаний<br>yans-consult.ru</div>',
+      '</div>',
+      '<div class="meta">' + esc(a.type) + ' · ' + esc(a.theme) + ' · ' + esc(a.industry) + '</div>',
+      '<h1>' + esc(a.title) + '</h1>',
+      '<div class="lead">' + esc(a.summary) + '</div>',
+      '<div class="body">' + paras + '</div>',
+      '<div class="concl"><span>Вывод</span><p>' + esc(a.conclusion) + '</p></div>',
+      '<div class="sig">',
+      '<div><b>Автор:</b> ' + esc(a.author) + '</div>',
+      '<div><b>Проверил:</b> ' + esc(a.reviewer) + '</div>',
+      '<div class="dates">Опубликовано ' + fmt(a.date) + ' · Актуальность проверена ' + fmt(a.checked) + ' · Нормативная база по состоянию на ' + fmt(a.checked) + '</div>',
+      '</div>',
+      '<div class="disc">Материал носит информационный характер и не является консультацией по конкретной ситуации. Для получения письменной консультации обратитесь в ООО «Я.Н.С. – Консалт».</div>',
+      '<div class="foot">ООО «Я.Н.С. – Консалт» · 127083, Москва, ул. 8 Марта, д. 1, стр. 12, БЦ «ТРИО», корп. 3, 4 этаж · +7 495 103-10-51 · info@yans-consult.ru · yans-consult.ru</div>',
+      '</body></html>'
+    ].join('');
+    const frame = document.createElement('iframe');
+    frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
+    document.body.appendChild(frame);
+    const d = frame.contentDocument;
+    d.open();
+    d.write(doc);
+    d.close();
+    const run = () => {
+      frame.contentWindow.focus();
+      frame.contentWindow.print();
+      this._timers.push(setTimeout(() => frame.remove(), 60000));
+    };
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(() => setTimeout(run, 80));
+    else setTimeout(run, 500);
+  }
+
   renderVals() {
     const st = this.state;
     const go = (p, e) => () => this.go(p, e);
@@ -1126,6 +1196,7 @@ class Component extends DCLogic {
     return {
       markCells,
       replayMark: () => this.scramble(),
+      exportPdf: () => this.exportPdf(ARTICLES[st.art] || ARTICLES[0]),
       phone: this.props.phone ?? '+7 495 103-10-51',
       fax: '+7 495 103-10-52',
       email: 'info@yans-consult.ru',
