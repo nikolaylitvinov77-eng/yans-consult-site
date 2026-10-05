@@ -88,15 +88,17 @@
           <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8E7328">{{ p.group }} · {{ p.roman }}</div>
         </div>
 
-        <div style="padding:7mm 18mm 0;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:3mm">Что входит в работу</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2mm 8mm">
-            <sc-for list="{{ p.included }}" as="i" hint-placeholder-count="6">
-              <div style="font-size:9pt;line-height:1.35;color:#4F544E;border-bottom:0.2mm solid #EFEDE4;padding-bottom:1.8mm">{{ i }}</div>
-            </sc-for>
-          </div>
+        <div data-fit-roman="{{ p.roman }}" style="padding:7mm 18mm 0;flex:1;display:flex;flex-direction:column">
+          <sc-if value="{{ p.showIncluded }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin-bottom:3mm">Что входит в работу</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2mm 8mm">
+              <sc-for list="{{ p.included }}" as="i" hint-placeholder-count="6">
+                <div style="font-size:9pt;line-height:1.35;color:#4F544E;border-bottom:0.2mm solid #EFEDE4;padding-bottom:1.8mm">{{ i }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
 
-          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin:6mm 0 3mm">Услуги направления</div>
+          <div style="font-size:8pt;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#85897F;margin:{{ p.servicesTop }} 0 3mm">Услуги направления</div>
           <div style="display:flex;flex-direction:column;gap:1.8mm">
             <sc-for list="{{ p.services }}" as="s" hint-placeholder-count="6">
               <div style="display:grid;grid-template-columns:60mm 1fr 1fr;gap:5mm;padding-bottom:1.7mm;border-bottom:0.2mm solid #EFEDE4">
@@ -157,21 +159,53 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+7 495 103-10-51&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  state = { dirs: [] };
+  state = { dirs: [], tight: {} };
 
   componentDidMount() {
     import('./yans-directions.js').then(m => this.setState({ dirs: m.DIRECTIONS }));
   }
 
+  // Лист направления не влез в А4: убрать на нём блок «Что входит в работу».
+  // Замер только после того, как лист получил размер А4 (210×297 мм = 794×1123 точки).
+  componentDidUpdate() {
+    if (this.state.dirs.length && !this.fitTimer) this.fitTimer = setTimeout(() => this.fitPages(0), 0);
+  }
+
+  fitPages(attempt) {
+    document.fonts.ready.then(() => {
+      const pages = [...document.querySelectorAll('[data-fit-roman]')].map(el => [el.getAttribute('data-fit-roman'), el.closest('section.page')]);
+      const ready = pages.length > 0 && pages.every(([, pg]) => pg && Math.abs(pg.clientWidth - 794) < 3 && Math.abs(pg.clientHeight - 1123) < 3);
+      if (!ready) {
+        this.fitTimer = attempt < 50 ? setTimeout(() => this.fitPages(attempt + 1), 200) : null;
+        return;
+      }
+      this.fitTimer = null;
+      const tight = Object.assign({}, this.state.tight);
+      let changed = false;
+      pages.forEach(([roman, pg]) => {
+        if (!tight[roman] && pg.scrollHeight > pg.clientHeight + 1) { tight[roman] = true; changed = true; }
+      });
+      if (changed) this.setState({ tight });
+    });
+  }
+
   renderVals() {
     const GROUP = { I: 'Налоговая практика', II: 'Налоговая практика', III: 'Налоговая практика', IV: 'Налоговая практика', V: 'Юридическая практика', VI: 'Юридическая практика', VII: 'Юридическая практика', VIII: 'Юридическая практика', IX: 'Юридическая практика', X: 'Юридическая практика', XI: 'Оценка и управленческий консалтинг', XII: 'Оценка и управленческий консалтинг' };
+    const plural = (n, one, few, many) => { const a = n % 100, b = n % 10; return (a > 10 && a < 20) ? many : b === 1 ? one : (b > 1 && b < 5) ? few : many; };
+    const brochureRows = list => list.some(s => s.g) ? list.reduce((acc, s) => {
+      const last = acc[acc.length - 1];
+      if (last && last.t === s.g) last.names.push(s.t);
+      else acc.push({ t: s.g, names: [s.t] });
+      return acc;
+    }, []).map(r => ({ t: r.t, q: r.names.length + ' ' + plural(r.names.length, 'услуга', 'услуги', 'услуг'), r: r.names.slice(0, 3).join('; ') + (r.names.length > 3 ? '; ещё ' + (r.names.length - 3) + ' на сайте' : '') })) : list;
     const pages = [];
     (this.state.dirs || []).forEach(d => {
       const base = {
         group: GROUP[d.roman],
         roman: d.roman, title: d.title, lead: d.lead, short: d.short, when: d.when,
-        included: d.included, services: d.services, result: d.result, term: d.term,
-        border: d.border, count: d.services.length
+        included: d.included, services: brochureRows(d.services), result: d.result, term: d.term,
+        border: d.border, count: d.services.length,
+        showIncluded: !this.state.tight[d.roman], servicesTop: this.state.tight[d.roman] ? '0' : '6mm'
       };
       pages.push(Object.assign({ isCover: true, isDetail: false }, base));
       pages.push(Object.assign({ isCover: false, isDetail: true }, base));
